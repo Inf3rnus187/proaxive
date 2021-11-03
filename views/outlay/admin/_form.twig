@@ -1,0 +1,43 @@
+<div class="admin-form">
+    {% if withClient == 0 %}
+        {{ viewAlert('info', "<strong>Note :</strong> Si le débours est lié à une intervention, veuillez le créer via la fiche du client.") | raw }}
+    {% endif %}
+    <div class="grid-12">
+        {% if withClient == 1 %}
+            <div class="col-3_sm-12">
+                {{ include('outlay/admin/_client.twig') }}
+            </div>
+        {% elseif withClient == 0 %}
+            <div class="col-3_sm-12">{{ form.select('client_id', 'Client', client) | raw }}</div>
+        {% endif %}
+        <div class="col-3_sm-12">{{ form.input('amount', "Montant du débours", "Montant précis ou maximum") | raw }}</div>
+        <div class="col-3_sm-12">{{ form.input('ref_propal', "Référence devis", "Numéro de devis de référence") | raw }}</div>
+        {% if withClient == 1 %}
+            {% if clientIntervention is null or clientIntervention is empty %}
+                <div class="col-3_sm-12">
+                    <p class="alert alert-danger" style="border-color:transparent">
+                        Ce client n'a aucune intervention enregistrée<br>
+                        <i class="icofont-warning-alt"></i> <u>La référence d'intervention sera <i>NULL</i></u>
+                        <input type="hidden" name="ref_inter">
+                    </p>
+                </div>
+            {% else %}
+                <div class="col-3_sm-12">{{ form.select('ref_inter', 'Intervention', clientIntervention) | raw }}</div>
+            {% endif %}
+        {% elseif withClient == 0 %}
+            <div class="col-3_sm-12">{{ form.input('ref_inter', "Référence intervention", "Numéro de l'intervention associée") | raw }}</div>
+        {% endif %}
+    </div>
+
+    <div class="grid-12">
+        <div class="col-8_sm-12">
+            {{ form.textareaMde('products', "Informations complémentaire", "Peut contenir la liste des articles achetés") | raw }}
+        </div>
+        <div class="col-4_sm-12">
+            {{ form.input('seller', "Vendeur", "Site de vente, entreprise") | raw }}
+            {{ form.select('payment', 'Moyen de remboursement', {'Carte bancaire' : 'Carte bancaire', 'Espèce' : 'Espèce', 'Chèque' : 'Chèque', 'Virement' : 'Virement'}) | raw }}
+            {{ form.select('status_id', 'Status', status) | raw }}
+            {{ form.checkbox('signature', 'Signé par les deux parties ?') |raw }}
+        </div>
+    </div>
+</div>

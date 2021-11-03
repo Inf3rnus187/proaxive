@@ -1,0 +1,78 @@
+{% extends '_layout/dashboard/layout.twig' %}
+
+{% block title %}Les sociétés{% endblock %}
+
+{% block body %}
+    <div class="container--admin">
+        <div class="container">
+            <div class="admin-content">
+                {{ include('_notifications.twig') }}
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between">
+                        <div>
+                            <h4 class="card-title">Gestion des sociétés</h4>
+                        </div>
+                        <div>
+                            <a href="/admin/add-society" class="btn-sm btn-light-info"><i class="ri-add-circle-line"></i> Nouvelle société</a>
+                            {% if society is not empty %}
+                                <form method="post" action="/admin/society/export">
+                                    <input type="hidden" name="export_data">
+                                    <button type="submit" class="btn-sm btn-primary"> <i class="ri-download-fill"></i> Exporter les sociétés</button>
+                                </form>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="card-table">
+                        {% if society is empty %}
+                            {{ viewAlert('info',"Il n'y a aucune société d'enregistrée pour le moment") | raw }}
+                        {% else %}
+                            <table id="data-table" class="table-default">
+                                <thead>
+                                <tr>
+                                    <th>Raison sociale</th>
+                                    <th>Tél Fixe</th>
+                                    <th>Tél 2</th>
+                                    <th>Ville</th>
+                                    <th>Site internet</th>
+                                    <th>Courriel</th>
+                                    <th>MàJ</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for item in society %}
+                                    <tr>
+                                        <td><strong>{{ item.s_name }}</strong></td>
+                                        <td>{% if item.phone is not empty %}{{ item.phone }}{% endif %}</td>
+                                        <td>{% if item.phone_2 is not empty %}{{ item.phone_2 }}{% endif %}</td>
+                                        <td>
+                                            {% if item.postal_code is not empty and item.city is not empty %}
+                                                <i>{{ item.postal_code }}</i> - {{ item.city }}
+                                            {% elseif item.postal_code is not empty %}
+                                                <i>{{ item.postal_code }}</i>
+                                            {% elseif item.city is not empty %}
+                                                {{ item.city }}
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ item.website }}</td>
+                                        <td>{{ item.s_mail }}</td>
+                                        <td>{{ item.updated_at | date('d/m/Y') }}</td>
+                                        <td>
+                                            <a href="{{ item.urlAdmin(item.id) }}" class="btn btn-sm btn-light-info" title="Modifier la société"><i class="ri-edit-2-fill"></i></a>
+                                            <button class="btn btn-sm btn-light-danger popup-trigger" data-popup-trigger="delete-modal-{{ item.id }}" type="button"><i class="ri-delete-bin-line"></i></button>
+                                            <form method="post" action="/admin/society/delete">
+                                            <input type="hidden" value="{{ item.id }}" name="id">
+                                            {{ include('dashboard/_modal-delete.twig', {id:item.id , title:item.s_name, 'note': 'Les clients associés ne seront pas supprimé'}) }}
+                                            </form>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

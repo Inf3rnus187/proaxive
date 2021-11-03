@@ -1,0 +1,14 @@
+<div class="thumbnail thumbnail-bloc mg-b-1 {% if equipment.status == 0 %}equipment-out{% endif %}">
+    <a href="/admin/edit-equipment/{{ equipment.id }}">
+        <div class="d-flex align-items-center">
+            <div class="thumb-b-img"><i class="icofont-{{ categoryEquipment.icon }}"></i></div>
+            <div class="thumb-b-ctn">
+                <span class="ctn--title">{{ equipment.name }}</span>
+                <p>
+                    <i>{{ categoryEquipment.title }}</i> - {{ brand.b_title }}<br>
+                    <i class="icofont-clock-time"></i> {{ equipment.updated_at | date('d-m-Y') }}
+                </p>
+            </div>
+        </div>
+    </a>
+</div>

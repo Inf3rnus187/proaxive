@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+    <meta name="robots" content="noindex">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ getenv('APP_ROOT_PUBLIC') }}/assets/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ getenv('APP_ROOT_PUBLIC') }}/assets/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ getenv('APP_ROOT_PUBLIC') }}/assets/icons/favicon-16x16.png">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <!-- START::Animate CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" href="{{ getenv('APP_THEME') }}/stylesheets/app.css">
+    <link rel="stylesheet" href="{{ getenv('APP_ROOT_PUBLIC') }}/assets/frameworks/gridlex/gridlex.min.css">
+    <title>Proaxive Administation - Connexion</title>
+</head>
+<body id="body-default" class="auth-login {% if app_setting.fixed_dark == 1 %}darker{% endif %}">
+<div class="auth-page">
+    <div class="container">
+        <div class="grid justify-content-center">
+            <div class="col-5_sm-12_lg-6">
+                <div class="card card-login">
+                    <div class="card-body">
+                        <div class="auth-content">
+                            <div class="admin-form">
+                                {% block body %}{% endblock %}
+                            </div>
+                            <div class="auth-login-bottom text-center mg-t-2">
+                                2021. <strong>Proaxive</strong> par SelMaK
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% block javascripts %}{% endblock %}
+<script src="{{ getenv('APP_THEME') }}/js/main.js"></script>
+</body>
+</html>

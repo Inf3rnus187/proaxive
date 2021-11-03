@@ -1,0 +1,25 @@
+<!--Modal-->
+<div class="popup-modal shadow" data-popup-modal="{{ id }}">
+    <i class="ri-close-line popup-modal__close bg-danger rounded" aria-hidden="true"></i>
+    <div class="popup-modal-header">
+        <h1 class="font-weight-bold">
+            {{ title }}
+        </h1>
+    </div>
+    <div class="popup-modal-body">
+        {% if note is not empty %}
+            {{ viewAlert('info', note) | raw }}
+        {% endif %}
+        <p>
+            {{ content }}
+        </p>
+        <p><strong>{{ endMessage }}</strong></p>
+    </div>
+    <div class="popup-modal-footer">
+        <div class="form-group">
+            <button type="submit" name="" class="btn btn-danger"><i class="fa fa-check-circle" aria-hidden="true"></i> Oui, je supprime</button>
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>
+<!--/modal-->

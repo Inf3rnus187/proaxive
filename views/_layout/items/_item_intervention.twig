@@ -1,0 +1,19 @@
+<!-- START Toogle Grid and List CONTENT 0{{ item.idi }} -->
+<div class="is--body">
+    <div class="grid0--icon">
+        <div class="g_icon">
+            <div class="is--icon">
+                <i class="ri-list-check-2"></i>
+            </div>
+        </div>
+        <div class="is--body-display">
+            <div class="is--section is--section-td is--section-start">
+                <span class="text-uppercase"><a href="{{ item.urlAdmin(item.idi) }}">{{ item.ititle }}</a></span>
+            </div>
+            <div class="is--section is--section-td">{{ item.number }}</div>
+            <div class="is--section is--section-td"><i class="ri-time-fill"></i> {{ item.created_at | date('d/m/Y') }}</div>
+            <div class="is--section is--section-td"><i class="{{ item.icon }}"></i> {{ item.ename }}</div>
+        </div>
+    </div>
+</div>
+<!-- END Toogle Grid and List CONTENT 0{{ item.id }} -->

@@ -1,0 +1,47 @@
+<div class="card mg-b-1">
+    <div class="card-body">
+        <div class="text-center">
+            <i class="ri-computer-line" style="font-size:2em;"></i>
+            <h2>Matériel déposé</h2>
+        </div>
+        <div class="text-center">
+            <span class="small-txt-h2 text-center d-block mg-b-1">{{ equipment.name }} ({{ equipment.b_title }})</span>
+        </div>
+        <div class="components">
+            <div class="components--bloc">
+                <span class="c__title">Processeur</span>
+                <span>{{ equipment.r_cpu }}</span>
+            </div>
+            <div class="components--bloc">
+                <span class="c__title">Carte mère</span>
+                <span>{{ equipment.r_mb }}</span>
+            </div>
+            <div class="components--bloc">
+                <span class="c__title">Socket</span>
+                <span>{{ equipment.r_socket }}</span>
+            </div>
+            <div class="components--bloc">
+                <span class="c__title">RAM</span>
+                <span>{{ equipment.r_ram }}</span>
+            </div>
+            <div class="components--bloc">
+                <span class="c__title">GPU</span>
+                <span>{{ equipment.r_cg }}</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card mg-b-1">
+    <div class="card-body">
+        <div class="text-center">
+            <h2>Système d'exploitation</h2>
+        </div>
+        <div class="text-center">
+            <div class="text-center mg-t-1 mg-b-1" style="font-weight:600;">
+                {{ equipment.os_name }} ({{ equipment.os_architecture }})
+            </div>
+            ver. <span class="badge badge-light-info d-inline-block">{{ equipment.os_release }}</span>
+        </div>
+    </div>
+</div>

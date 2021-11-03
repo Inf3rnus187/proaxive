@@ -1,0 +1,208 @@
+{% extends '_layout/dashboard/layout.twig' %}
+
+{% block title 'Gestion des équipements' %}
+
+{% block stylesheets %}
+    <!-- START::SimpleMDE -->
+    <link rel="stylesheet" href="{{ getenv('APP_ROOT_PUBLIC') }}/assets/javascript/simplemde/simplemde.min.css">
+{% endblock %}
+
+{% block javascripts %}
+<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+<script>
+    [].forEach.call(document.getElementsByClassName('area-mdeditor'),element => {
+        const simplemde = new SimpleMDE({
+            element: element,
+        });
+    });
+</script>
+{% endblock %}
+
+{% block body %}
+    {{ include('_notifications.twig') }}
+    <div class="grid-12">
+        <div class="col-12_sm-12">
+            <div class="card">
+                <form class="form-big" method="post">
+                <div class="card-header d-flex justify-content-between">
+                    <div>
+                        <h4 class="card-title">{{ equipment.name }}</h4>
+                        Equipement ajouté par <a href="{{ user.urlAdmin() }}">{{ user.pseudo }}</a> - <i>Dernière mise à jour le {{ equipment.updated_at | format_date('none', 'd, MMM Y à H:s', null, 'gregorian', 'fr') }}</i>
+                    </div>
+                    <div>
+                        <a class="btn btn-secondary" href="/admin/client/{{ client_id }}/equipment/{{ equipment.id }}/add-intervention" title="Créer une nouvelle intervention pour cet équipement"> <i class="ri-add-circle-line"></i> Créer une intervention</a>
+                        {{ form.submitDefault('Sauvegarder', 'primary') | raw }}
+                    </div>
+                </div>
+                <div class="card-body card-tabs nopg">
+                    <div class="admin-form tabs-form">
+                        <ul id="tabs">
+                            <li><a href="#tab1"><i class="ri-information-fill"></i> Informations générales</a></li>
+                            <li><a href="#tab2"><i class="ri-cpu-fill"></i> Configuration matériels</a></li>
+                            {% if equipment.r_hdd0 is not null %}
+                                <li><a href="#stockage"><i class="ri-hard-drive-2-fill"></i> Stockages</a></li>
+                            {% endif %}
+                            <li><a href="#tab3"><i class="ri-list-check-2"></i> Interventions pour cet équipement</a></li>
+                        </ul>
+                        <div class="tabs-pe pg2">
+                            <div class="tabContent" id="tab1">
+                                {{ include('equipments/admin/_form.twig') }}
+                                <div class="separator separator-dashed mg-tb-2"></div>
+                                Vous pouvez supprimer cet équipement, action irréversible !
+                                <p class="mg-t-1">
+                                    <button type="button" data-popup-trigger="delete-modal-{{ equipment.id }}" class="btn-sm btn-light-danger popup-trigger"><i class="icofont-delete"></i> Supprimer cet équipement</button>
+                                </p>
+                            </div>
+                            <div class="tabContent" id="tab2">
+                                <div class="grid-12">
+                                    <div class="col-7_sm-12">
+                                        <div class="grid-12">
+                                            <div class="col-6_sm-12">
+                                                {{ form.input('r_install_date', "Date d'installation", 'Année ou date complète') | raw }}
+                                                {{ form.input('r_pc_name', 'Nom du PC', 'Nom du PC') | raw }}
+                                                {{ form.input('r_bios', 'BIOS version', 'Version du BIOS') | raw }}
+                                                {{ form.input('r_manufacturer', "Modèle", 'Modèle de la machine') | raw }}
+                                                {{ form.input('r_sn', "Numéro de série", 'Numéro de série') | raw }}
+                                            </div>
+                                            <div class="col-6_sm-12">
+                                                {{ form.input('r_cpu', "Processeur", 'Nom du processeur') | raw }}
+                                                {{ form.input('r_socket', 'Socket', 'Socket du processeur') | raw }}
+                                                {{ form.input('r_ram', 'RAM', 'Mémoire vive') | raw }}
+                                                {{ form.input('r_mb', 'Carte mère', 'Nom de la carte mère') | raw }}
+                                                {{ form.input('r_cg', 'GPU', 'Carte / chipset graphique') | raw }}
+                                            </div>
+                                        </div>
+                                        {{ form.textareaMde('content', "Informations complémentaire", false, false, false) | raw }}
+                                    </div>
+                                    <div class="col-5_sm-12">
+                                        {% if files is not empty %}
+                                            <div class="alert alert-success" role="alert">
+                                                <span><i class="icofont-check"></i></span>
+                                                <i class="ri-check-fill"></i> Cet équipement possède son historique.
+                                            </div>
+                                                <p>
+                                                    Historique d'équipement de <strong>{{ equipment.name }}</strong>
+                                                </p>
+                                            <table class="table-default mg-b-2">
+                                                <thead>
+                                                <tr>
+                                                    <th class="nopg text-center pd-l-1 pd-r-1"></th>
+                                                    <th class="pd-l-1 pd-r-1">Fichiers (historique)</th>
+                                                    <th class="pd-l-1 pd-r-1"></th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for file in files %}
+                                                    <tr>
+                                                        <td class="nopg text-center pd-l-1 pd-r-1">{% if file == equipment.file_bao %}<i class="ri-checkbox-circle-fill"></i>{% endif %}</td>
+                                                        <td class="pd-l-1 pd-r-1">{{ file }}</td>
+                                                        <td class="pd-l-1 pd-r-1"><a href="/admin/equipment/{{ equipment.id }}/bao/{{ file | supext }}" class="btn-table btn-light-info">Ouvrir</a></td>
+                                                    </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+
+                                            <button type="button" class="btn btn-primary popup-trigger" data-popup-trigger="import-pax"><i class="ri-upload-fill"></i> Mettre à jour (fichier .bao)</button>
+                                            <small class="d-block">*Fichier .bao disponible uniquement à partir de la version 0.7.2 de BAO</small>
+                                        {% else %}
+                                            {{ viewAlert('info', "Ce rapport permet d'obtenir des informations précise sur les composants installés.") | raw }}
+                                            <p>
+                                                Proaxive vous permet également d'importer un rapport d'équipement de la solution <strong>BAO</strong> (Boîte à Outils par Bastien).<br>
+                                                Ce rapport contient la configuration matériel de l'ordinateur que Proaxive récupère automatiquement.
+                                            </p>
+                                            <p>
+                                                Seuls les fichiers <strong>.bao</strong> sont autorisés.
+                                            </p>
+                                            <button type="button" class="btn btn-primary popup-trigger" data-popup-trigger="import-pax"><i class="ri-upload-fill"></i> Importer un rapport</button>
+                                            <a href="https://www.isergues.fr/bao.php" target="_blank" class="btn btn-info">Télécharger BAO*</a>
+                                            <small class="d-block">*Fichier .bao disponible uniquement à partir de la version 0.7.2</small>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            {% if equipment.r_hdd0 is not null %}
+                            <div class="tabContent" id="stockage">
+                                <div class="grid-12">
+                                    <div class="col-6_sm-12">
+                                        {{ form.textareaDefault('r_hdd0', "HDD0", "HDD0") | replace({'[BR]': ' | '}) | raw }}
+                                        {{ form.textareaDefault('r_hdd2', "HDD2", "HDD2") | replace({'[BR]': ' | '}) | raw }}
+                                    </div>
+                                    <div class="col-6_sm-12">
+                                        {{ form.textareaDefault('r_hdd1', "HDD1", "HDD1") | replace({'[BR]': ' | '}) | raw }}
+                                        {{ form.textareaDefault('r_hdd3', "HDD3", "HDD3") | replace({'[BR]': ' | '}) | raw }}
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                            <div class="tabContent" id="tab3">
+                                {% if interventions is empty %}
+                                    {{ viewAlert('info', "Aucune intervention enregistrée pour cet équipement") | raw }}
+                                {% else %}
+                                    <div class="grid-12">
+                                        {% for item in interventions %}
+                                            <div class="col-4_sm-12" style="margin-top:0.5em;">
+                                                <div class="thumbnail thumbnail-bloc mg-b-1">
+                                                    <a href="{{ item.urlAdmin(item.id) }}">
+                                                        {% if item.close_date is null %}
+                                                            <div class="ribbon ribbon--right ribbon--primary"><span><i class="ri-tools-line"></i> wip</span></div>
+                                                        {% endif %}
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="thumb-b-img"><i class="icofont-{{ item.icon }}"></i></div>
+                                                            <div class="thumb-b-ctn">
+                                                                <span class="ctn--title">{{ item.title }}</span>
+                                                                <p>
+                                                                    N°{{ item.number }}<br>
+                                                                    <i class="ri-calendar-2-fill"></i> Créée le {{ item.created_at | date('d-m-Y') }}<br>
+                                                                    {% if item.close_date is not null %}
+                                                                        <i class="ri-checkbox-circle-fill"></i> Cloturée le <span class="txtprimary">{{ item.close_date | date('d-m-Y') }}</span>
+                                                                    {% else %}
+                                                                        <i class="ri-time-fill"></i> Mise à jour le {{ item.updated_at | date('d-m-Y') }}
+                                                                    {% endif %}
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </form>
+            </div>
+            <form method="post" action="/admin/equipment/delete">
+                <input type="hidden" value="{{ equipment.id }}" name="id">
+                {{ include('dashboard/_modal-delete.twig', {id:equipment.id , title:equipment.name, 'note': 'Cela supprimera également ses interventions'}) }}
+            </form>
+            <form method="post" action="/admin/equipment/{{ equipment.id }}/import" enctype="multipart/form-data">
+                <input type="hidden" value="{{ equipment.id }}" name="id">
+                <!--Modal-->
+                <div class="popup-modal shadow" data-popup-modal="import-pax">
+                    <i class="ri-close-line popup-modal__close bg-danger rounded" aria-hidden="true"></i>
+                    <div class="popup-modal-header">
+                        <h1 class="font-weight-bold">
+                            Importer un fichier .BAO
+                        </h1>
+                    </div>
+                    <div class="popup-modal-body">
+                        {{ viewAlert('info', 'Le fichiers .bao se trouve dans le dossier <strong>Proaxive</strong> de la solution BAO (ver.0.7.2 et supérieur)') | raw }}
+                        <p>
+                            <input type="file" class="form-input" name="bao_file" title="Parcourir les fichiers">
+                        </p>
+                        <p>Vous serez redirigé vers le formulaire de confirmation</p>
+                    </div>
+                    <div class="popup-modal-footer">
+                        <div class="form-group">
+                            <button type="submit" name="bao_file" class="btn btn-primary"><i class="ri-check-fill"></i> Confimer</button>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                </div>
+                <!--/modal-->
+            </form>
+        </div>
+    </div>
+{% endblock %}

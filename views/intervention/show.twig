@@ -1,0 +1,100 @@
+{% extends '_layout/layout.twig' %}
+
+{% block title %} Intervention n°{{ intervention.number }} du {{ intervention.created_at | format_date('none', 'EEEE d MMM Y', null, 'gregorian', 'fr') }}  {% endblock %}
+
+{% block javascripts %}
+    <script>
+        document.addEventListener( 'DOMContentLoaded', function () {
+            new Splide( '.splide').mount();
+        } );
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@3.0.3/dist/js/splide.min.js"></script>
+    <script src="{{ getenv('APP_ROOT_PUBLIC') }}/assets/styles/proaxive/js/fslightbox.js"></script>
+{% endblock %}
+
+{% block body %}
+    <div class="title-page shadow-sm">
+        <div class="d-flex justify-content-space-between align-item-center">
+            <div>
+                <h1><span>{{ company.cname }}</span></h1>
+                <span>Suivez ce qu'il se passe sur votre équipement informatique</span>
+            </div>
+            <div class="inter-action text-right">
+                <ul>
+                    <li><a href="/i/{{ intervention.number }}/print"><i class="ri-printer-line"></i></a></li>
+                    <li><a href="#"><i class="ri-chat-1-line"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="content-app">
+        <div class="container">
+            <div class="grid-12">
+                <div class="col-9_sm-12_lg-12">
+                    <div class="card mg-b-1">
+                        <div class="card-body">
+                            <div class="grid-12">
+                                <div class="col-2_sm-12">
+                                    <strong class="d-block">N°</strong>
+                                    {{ intervention.number }}
+                                </div>
+                                <div class="col-2_sm-12">
+                                    {% if intervention.pmad == 1 %}
+                                        <strong class="d-block">Type</strong>
+                                        À distance
+                                    {% elseif(intervention.pmad == 0) %}
+                                        <strong class="d-block">Date de dépôt</strong> {{ intervention.received | date('d-m-Y') }}
+                                    {% endif %}
+                                </div>
+                                <div class="col-3_sm-12">
+                                    <strong class="d-block primarytxt">Début de l'intervention</strong>
+                                    {% if intervention.start is null %}
+                                        N.A
+                                    {% else %}
+                                        {{ intervention.start | date('d-m-Y') }}
+                                    {% endif %}
+                                </div>
+                                <div class="col-3_sm-12">
+                                    <strong class="d-block">État</strong>
+                                    {% if(intervention.closed == 1) %}
+                                        <span class="badge badge-light-success">Cloturé le {{ intervention.close_date | format_date('none', 'EEEE d MMM Y', null, 'gregorian', 'fr') }}</span>
+                                    {% else %}
+                                        <span class="badge" style="background-color:#{{ status.bgcolor }}">{{ status.title }}</span>
+                                    {% endif %}
+                                </div>
+                                <div class="col-2_sm-12">
+                                    <strong class="d-block">Votre technicien</strong>{{ user.fullname }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <strong>Dernière mise à jour le</strong> : {{ intervention.updated_at | format_date('none', 'EEEE d MMM Y à H:m', null, 'gregorian', 'fr') }}
+                        </div>
+                    </div>
+                    {% if intervention.pmad is null or intervention.pmad == 0 %}
+                        <div class="steps">
+                            <ul class="progressbar">
+                                <li {% if intervention.steps >= 1 %}class="active"{% endif %}><span><i class="ri-roadster-line"></i></span>Matériel récupéré</li>
+                                <li {% if intervention.steps >= 2 %}class="active"{% endif %}><span><i class="ri-tools-line"></i></span> En atelier</li>
+                                <li {% if intervention.steps >= 3 %}class="active"{% endif %}><span><i class="ri-list-check-2"></i></span> Tests finaux</li>
+                                <li {% if intervention.steps == 4 %}class="active"{% endif %}><span><i class="ri-checkbox-circle-line"></i></span> Terminé</li>
+                            </ul>
+                        </div>
+                    {% endif %}
+                    {% if intervention.start is null %}
+                        {{ include('intervention/_notstart.twig') }}
+                    {% else %}
+                        {{ include('intervention/_start.twig') }}
+                    {% endif %}
+                </div>
+                <div class="col-3_sm-12_lg-12">
+                    {% if isfile_exists %}
+                        {{ include('_layout/widgets/_widget_gallery.twig') }}
+                    {% endif %}
+                    {{ include('_layout/widgets/_widget_equipment.twig') }}
+                    {{ include('_layout/widgets/_widget_company.twig') }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

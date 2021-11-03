@@ -1,0 +1,78 @@
+{% extends '_layout/dashboard/layout.twig' %}
+
+{% block title %}Les clients{% endblock %}
+
+{% block body %}
+    <div class="container--admin">
+        <div class="container">
+            <div class="admin-content">
+                {{ include('_notifications.twig') }}
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between">
+                        <div>
+                            <h4 class="card-title">Gestion des clients</h4>
+                        </div>
+                        <div>
+                            {% if clients is not empty %}
+                                <form method="post" action="/admin/clients/export">
+                                    <input type="hidden" name="export_data">
+                                    <button type="submit" class="btn-sm btn-primary"> <i class="icofont-download-alt"></i> Exporter les clients</button>
+                                </form>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="card-table">
+                        {% if clients is empty %}
+                        {{ viewAlert('info',"Il n'y a aucun client d'enregistré pour le moment") | raw }}
+                        {% else %}
+                            <table id="data-table" class="table-default">
+                                <thead>
+                                <tr>
+                                    <th>Nom</th>
+                                    <th>Tél Fixe</th>
+                                    <th>Mobile</th>
+                                    <th>Ville</th>
+                                    <th>Département</th>
+                                    <th>Courriel</th>
+                                    <th>MàJ</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for client in clients %}
+                                    <tr onclick="document.location = '{{ client.urlAdmin(client.c_id) }}';" style="cursor: pointer">
+                                        <td>
+                                            {% if client.sleeping == 1 %}
+                                                <span style="color:#a4a4a4"><i class="icofont-teddy-bear"></i> <strong>{{ client.fullname }}</strong></span>
+                                                {% elseif client.sleeping == 0 %}
+                                                <strong>{{ client.fullname }}</strong>
+                                            {% endif %}
+
+                                        </td>
+                                        <td>{% if client.phone is not empty %}{{ client.phone }}{% endif %}</td>
+                                        <td>{% if client.mobile is not empty %}{{ client.mobile }}{% endif %}</td>
+                                        <td>
+                                            {% if client.city is not null and client.city is not empty %}
+                                               <i>{{ client.zipcode }}</i> - {{ client.city }}
+                                                {% else %}
+                                                <i>Non renseigné</i>
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ client.department }}</td>
+                                        <td>{{ client.mail }}</td>
+                                        <td>{{ client.updated_at | date('d/m/Y') }}</td>
+                                        <td>
+                                            <a href="{{ client.urlAdmin(client.c_id, 'edit') }}" class="btn btn-sm btn-light-info" title="Modifier le compte client"><i class="ri-edit-2-fill"></i></a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

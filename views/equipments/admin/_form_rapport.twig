@@ -1,0 +1,17 @@
+<div class="col-4_sm-12">
+    {{ form.input('r_install_date', "Date d'installation", 'Année ou date complète') | raw }}
+    {{ form.input('r_pc_name', 'Nom du PC', 'Le nom que porte le PC') | raw }}
+    {{ form.input('r_bios', 'BIOS version', 'Version du BIOS') | raw }}
+    {{ form.input('r_manufacturer', "Modèle", 'Modèle de la machine') | raw }}
+    {{ form.input('r_sn', "N° SN", 'Numéro de série') | raw }}
+</div>
+<div class="col-4_sm-12">
+    {{ form.input('r_cpu', "Processeur", 'Nom du processeur') | raw }}
+    {{ form.input('r_socket', 'Socket', 'Socket du processeur') | raw }}
+    {{ form.input('r_mb', 'Carte mère', 'Nom de la carte mère') | raw }}
+    {{ form.input('r_ram', 'RAM', 'Mémoire vive') | raw }}
+    {{ form.input('r_cg', 'GPU', 'Carte / chipset graphique') | raw }}
+</div>
+<div class="col-4_sm-12">
+    {{ form.textareaMde('content', "Informations complémentaire", false, false, false) | raw }}
+</div>

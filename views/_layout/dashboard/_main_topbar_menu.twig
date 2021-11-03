@@ -1,0 +1,75 @@
+<div class="pe-top-navbar" id="check-scroll">
+    <div class="pe-navbar">
+        <nav class="pe-navbar-content">
+            <!--Mobile navigation button-->
+            <div class="pe-navbar-navigation d-none" id="sidebar-navigation">
+                <a href="#">
+                    <span><i class="ri-menu-line"></i> Menu</span>
+                </a>
+            </div>
+            <!--/Mobile navigation button-->
+            <!--Toggle navigation button-->
+            <div class="pe-navbar-toggled d-inline-block d-none-mobile" id="sidebar-toggle">
+                    <a href="#">
+                        <span><i class="ri-menu-fold-line"></i></span>
+                    </a>
+            </div>
+            <div class="pe-navbar-breadcrumb d-none-mobile">
+                <!-- start:BreadCrumb -->
+                {{ include('_layout/dashboard/_breadcrumb.twig') }}
+                <!-- end:BreadCrumb -->
+            </div>
+            <!--/Toggle navigation button-->
+            <div class="pe-navbar-icons">
+                <ul>
+                    <li><a class="item-navbar-link" href="#" onclick="toggleFullScreen()" title="Passer en plein écran"><i class="ri-fullscreen-line"></i></a></li><li><button class="item-navbar-link" id="theme-switcher"><i class="ri-sun-fill"></i></button></li>
+                    <li><a class="item-navbar-link" href="/" target="_blank" title="Accueil de l'application"><i class="ri-earth-fill"></i></a></li>
+                </ul>
+            </div>
+            {% if sessionAuth is not null %}
+            <div class="pe-navbar-account">
+                <a href="#" class="btn-toggle item-navbar-link" title="Mon compte">
+                <span class="pe-account-name">
+                    <i class="ri-shield-user-fill"></i>
+                </span>
+                </a>
+                <div class="pe-account-submenu" style="display: none;">
+                    <div class="pe-account-subtitle bg-primary">
+                        <h5>Bonjour {{ sessionAuth.pseudo }}</h5>
+                    </div>
+                    <div class="pe-account-link-items">
+                        <a class="pe-account-link-item" href="/admin/myaccount">
+                            <div class="d-flex align-items-center">
+                                <div class="pe-link-item-icon">
+                                    <i class="ri-file-user-line"></i>
+                                </div>
+                                <div class="pe-link-item-name">
+                                    <h6>Editer mon compte</h6>
+                                    <p>Modifier mes détails personnel</p>
+                                </div>
+                            </div>
+                        </a>
+                        <a class="pe-account-link-item" href="/locked">
+                            <div class="d-flex align-items-center">
+                                <div class="pe-link-item-icon">
+                                    <i class="ri-logout-circle-line"></i>
+                                </div>
+                                <div class="pe-link-item-name">
+                                    <h6>Verrouiller</h6>
+                                    <p>Bloquer l'accès au panel</p>
+                                </div>
+                            </div>
+                        </a>
+                        <div class="d-inline-block w100 text-center pe-account-bottom-link">
+                            <a href="/logout" class="btn btn-primary btn-rounded" role="button">
+                                <i class="ri-logout-box-line"></i> Se déconnecter
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            {% endif %}
+        </nav>
+    </div>
+</div>

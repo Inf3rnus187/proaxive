@@ -1,0 +1,36 @@
+{% extends '_layout/layout_search.twig' %}
+
+{% block title "Suivi des interventions en ligne" %}
+
+{% block body %}
+    <div class="section no-pad-bot search text-center" id="index-banner">
+            <div class="card bradius search-box">
+                <div class="pg3">
+                    <h1 class="title-search">
+                        {% if company.logo is empty %}
+                            <img class="img-fluid va-middle" style="width:80px;" src="{{ getenv('APP_THEME') }}/logo_proaxive.png" alt="Logo {{ company.cname }}">
+                        {% else %}
+                            <img class="img-fluid va-middle" style="width:80px;" src="{{ getenv('APP_ROOT_PUBLIC') }}/uploads/company/{{ company.logo }}" alt="Logo {{ company.cname }}">
+                        {% endif %}
+                        {% if company.cname is empty %}
+                        Proaxive
+                        {% else %}
+                        {{ company.cname }}
+                        {% endif %}
+                    </h1>
+                    <span>Proaxive est une application web permettant de suivre les interventions en ligne.</span>
+                    <div class="pd-t-1">
+                        {{ include('_notifications.twig') }}
+                    </div>
+                    <form class="form-big" method="post">
+                        <h2 class="title-search-form">Entrez un numéro d'intervention</h2>
+                        <div class="title-border mb2"></div>
+                        {{ form.inputBlock('search_intervention', false, 'Votre numéro d\'intervention') | raw }}
+                        {{ form.submit('primary d-block w100', 'Accèder à mon suivi') | raw }}
+                    </form>
+                    {{ viewAlert('info', "<i class=\"ri-information-line\"></i> Le numéro d'intervention vous est communiqué par votre technicien.") | raw }}
+                    {{ viewAlert('info', "<strong>RGPD : </strong>pour des raisons de sécurité, vos données personnelles ne sont pas visible sur le suivi en ligne.") | raw }}
+                </div>
+            </div>
+    </div>
+{% endblock %}

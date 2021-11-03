@@ -1,0 +1,55 @@
+{% extends '_layout/dashboard/layout.twig' %}
+
+{% block title %}Nouvelle intervention{% endblock %}
+
+{% block stylesheets %}
+<!-- START::SimpleMDE -->
+<link rel="stylesheet" href="{{ getenv('APP_ROOT_PUBLIC') }}/assets/javascript/simplemde/simplemde.min.css">
+<!-- START::Datetime -->
+<link rel="stylesheet" href="{{ getenv('APP_ROOT_PUBLIC') }}/assets/javascript/tail-datetime/css/tail.datetime-default-green.css">
+<!-- START::DataTable -->
+<link rel="stylesheet" href="{{ getenv('APP_THEME') }}/node_modules/vanilla-datatables/dist/vanilla-dataTables.min.css">
+{% endblock %}
+
+{% block javascripts %}
+    <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+    <script>
+        [].forEach.call(document.getElementsByClassName('area-mdeditor'),element => {
+            const simplemde = new SimpleMDE({
+                element: element,
+            });
+        });
+    </script>
+    <script>
+        /** Date Hidden Intervention **/
+        function toggleFields(boxId, checkboxId) {
+            var checkbox = document.getElementById(checkboxId);
+            var box = document.getElementById(boxId);
+            checkbox.onclick = function() {
+                if (this.checked) {
+                    box.style['display'] = 'none';
+                } else {
+                    box.style['display'] = 'block';
+                }
+            };
+        }
+        toggleFields('dateDep', 'pmad');
+    </script>
+{% endblock %}
+
+{% block body %}
+    <div class="grid">
+        <div class="col-12_sm-12_lg-12">
+            <form method="post" class="form-big">
+                <div class="card">
+                    <div class="card-column d-flex">
+                        {{ include('intervention/admin/include/_aside_menu.twig') }}
+                        <div class="card-inner nopg fg-1">
+                            {{ include('intervention/admin/_form.twig', {'withClient': 2}) }}
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

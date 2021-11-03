@@ -1,0 +1,94 @@
+<!doctype html>
+<html class="no-js" lang="fr">
+<head>
+    <meta name="robots" content="noindex, nofollow">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ getenv('APP_ROOT_PUBLIC') }}/assets/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ getenv('APP_ROOT_PUBLIC') }}/assets/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ getenv('APP_ROOT_PUBLIC') }}/assets/icons/favicon-16x16.png">
+    <!--[if lt IE 7]>
+    <meta http-equiv="refresh" content="1; URL={{ getenv('APP_ROOT_PUBLIC') }}/ie6-browser">
+    <![endif]-->
+    <title>Proaxive - {% block title %}{% endblock %}</title>
+    <!-- CSS  -->
+    <!-- START::GridLex Local -->
+    {% block stylesheets %}{% endblock %}
+    <link rel="stylesheet" href="{{ getenv('APP_ROOT_PUBLIC') }}/assets/frameworks/gridlex/gridlex.min.css">
+    <!-- START::Animate CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <!-- START Splide CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@3.0.3/dist/css/splide.min.css">
+    <!-- START::REMIXICON -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <!-- START::Modal Admin -->
+    <link rel="stylesheet" href="{{ getenv('APP_THEME') }}/js/Modal-Vanilla/scss/stylesheets/modal.css" type="text/css"/>
+    <!-- START::Layout -->
+    <link rel="stylesheet" href="{{ getenv('APP_THEME') }}/stylesheets/app.css?={{ now | date('hi') }}" type="text/css"/>
+    <link rel="stylesheet" href="{{ getenv('APP_ROOT_PUBLIC') }}/assets/styles/default-css/print-intervention/voucher.css">
+</head>
+
+<body id="body-default" class="layout_tracker">
+<div class="body-blackout"></div>
+<div class="wrapper">
+    <div class="pe-content" id="pe-content">
+        <div class="container-fluid">
+            <div class="header">
+                <div class="d-flex justify-content-space-between align-items-center">
+                    <div class="d-flex align-items-center">
+                        <span class="proaxive_logo"><img src="{{ getenv('APP_THEME') }}/logo_proaxive.png" alt=""></span>
+                        <span class="title_tracker">Proaxive</span>
+                    </div>
+                    <div class="company-links">
+                        <span>{{ company.cname }} : </span>
+                        <ul>
+                            {% if company.facebook is not empty %}
+                            <li><a href="{{ company.facebook }}" target="_blank" title="Facebook de {{ company.cname }}" rel="noopener noreferrer">Facebook</a></li>
+                            {% endif %}
+                            {% if company.instagram is not empty %}
+                            <li><a href="{{ company.instagram }}" target="_blank" title="Instagram de {{ company.cname }}" rel="noopener noreferrer">Instagram</a></li>
+                            {% endif %}
+                            {% if company.twitter is not empty %}
+                                <li><a href="{{ company.twitter }}" target="_blank" title="Twitter de {{ company.cname }}" rel="noopener noreferrer">Twitter</a></li>
+                            {% endif %}
+                            {% if company.linkedin is not empty %}
+                                <li><a href="{{ company.linkedin }}" target="_blank" title="Linkedin de {{ company.cname }}" rel="noopener noreferrer">Linkedin</a></li>
+                            {% endif %}
+                        </ul>
+                        <ul>
+                            <li><button class="item-navbar-link" id="theme-switcher"><i class="ri-sun-line"></i> <i class="ri-moon-line"></i></button></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- start:Main-body -->
+            {% block body %}{% endblock %}
+            <!-- end:Main-body -->
+            <!-- Footer / Licence -->
+            <div class="footer-tracker">
+                <span><strong>Proaxive</strong> {{ app_info.number}} - Développé et édité par <a href="https://www.synexolabs.com" target="_blank"><strong>SynexoLabs</strong></a></span>
+            </div>
+        </div>
+    </div>
+</div>
+{% block javascripts %}{% endblock %}
+<!-- START::Style switcher -->
+<script src="https://cdn.jsdelivr.net/npm/themur@latest/dist/themur.min.js"></script>
+<script>
+    const theme = new Themur({
+        toggleElement: document.getElementById('theme-switcher'),
+        themeClass: 'darker',
+        useLocalStorage: true
+    });
+</script>
+
+<!-- START::main js -->
+<script src="{{ getenv('APP_THEME') }}/js/main.js"></script>
+<!-- START::navigation js -->
+<script src="/public/assets/styles/proaxive/js/navigation.js"></script>
+<!-- START::modal admin js -->
+<script src="{{ getenv('APP_THEME') }}/js/Modal-Vanilla/js/modal-vanilla.js"></script>
+<!-- START::SimpleMDE -->
+<script src="{{ getenv('APP_ROOT_PUBLIC') }}/assets/javascript/tabs.js"></script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!doctype html>
+<html class="no-js" lang="fr">
+<head>
+    <meta name="robots" content="noindex, nofollow">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ getenv('APP_ROOT_PUBLIC') }}/assets/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ getenv('APP_ROOT_PUBLIC') }}/assets/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ getenv('APP_ROOT_PUBLIC') }}/assets/icons/favicon-16x16.png">
+    <!--[if lt IE 7]>
+    <meta http-equiv="refresh" content="1; URL={{ getenv('APP_ROOT_PUBLIC') }}/ie6-browser">
+    <![endif]-->
+    <title>Proaxive - {% block title %}{% endblock %}</title>
+    <!-- CSS  -->
+    <!-- START::GridLex Local -->
+    <link rel="stylesheet" href="{{ getenv('APP_ROOT_PUBLIC') }}/assets/frameworks/gridlex/gridlex.min.css">
+    <!-- START::Animate CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <!-- START::REMIXICON -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <!-- START::DataTable -->
+    <link rel="stylesheet" href="{{ getenv('APP_THEME') }}/node_modules/vanilla-datatables/dist/vanilla-dataTables.min.css">
+    <!-- START::Modal Admin -->
+    <link rel="stylesheet" href="{{ getenv('APP_THEME') }}/js/Modal-Vanilla/scss/stylesheets/modal.css" type="text/css"/>
+    {% block stylesheets %}{% endblock %}
+    <!-- START::Layout -->
+    <link rel="stylesheet" href="{{ getenv('APP_THEME') }}/stylesheets/app.css?={{ "now" | date('hi') }}" type="text/css"/>
+    <!-- START::Print -->
+    <link rel="stylesheet" href="{{ getenv('APP_THEME') }}/stylesheets/print.css" type="text/css" media="print">
+
+</head>
+
+<body id="body-default" class="fixed-all {% if app_setting.fixed_dark == 1 %}darker{% endif%} {% if app_setting.aside_toggled == 1%}sidebar-toggled{% endif%} {% if app_setting.fixed_header == 0 %}fixed-header-top{% endif %}">
+<div class="body-blackout"></div>
+<div class="wrapper">
+    <div class="pe-sidebar {% if app_setting.sidebar_dark == 1 %}sidebar-darker{% endif%}" id="pe-sidebar">
+        <div class="pe-sidebar-logo">
+            <a class="d-flex align-items-center" href="/admin">
+                <img style="height:40px" src="{{ getenv('APP_THEME') }}/logo_proaxive.png" alt=""><span class="d-inline-block mg-l-05">Proaxive <i>Panel</i></span>
+            </a>
+            <span class="d-none toggle-logo"><img style="height:40px" src="{{ getenv('APP_THEME') }}/logo_proaxive.png" alt=""></span>
+        </div>
+        <!-- start:Main-menu -->
+        {{ include('_layout/dashboard/_main_menu.twig') }}
+        <!-- end:Main-menu -->
+    </div>
+    <div class="pe-content" id="pe-content">
+        <!-- start:Main-Topbar-Menu -->
+        {{ include('_layout/dashboard/_main_topbar_menu.twig') }}
+        <!-- end:Main-Topbar-Menu -->
+        <div class="container-fluid">
+            {% if app_setting.full_error == 1 %}
+                {{ viewAlert('danger', '<i class="ri-bug-line"></i> <strong>Attention</strong> ! les erreurs Whoops sont activées. Si vous êtes en production il est important de les désactiver (cf "Paramètres Généraux")') | raw }}
+            {% endif %}
+            <!-- start:Main-body -->
+            {% block body %}{% endblock %}
+            <!-- end:Main-body -->
+        </div>
+    </div>
+    <!-- NE PAS SUPPRIMER l'auteur original, MERCI ! -->
+    <div class="pe-footer">
+        2021 <strong><a href="https://www.proaxive.fr" target="_blank">Proaxive</a></strong>. Développé par <strong><a href="https://www.synexolabs.com" target="_blank">SynexoLabs</a></strong>. Version <span class="badge badge-light-info">{{ app_info.number }}</span>
+    </div>
+    <!-- /NE PAS SUPPRIMER, MERCI ! -->
+</div>
+{% block javascripts %}{% endblock %}
+<!-- START::Style switcher -->
+<script src="https://cdn.jsdelivr.net/npm/themur@latest/dist/themur.min.js"></script>
+<script>
+    const theme = new Themur({
+        toggleElement: document.getElementById('theme-switcher'),
+        themeClass: 'darker',
+        useLocalStorage: true
+    });
+</script>
+<!-- START::Linked select -->
+<script src="{{ getenv('APP_THEME') }}/js/linked-select.js"></script>
+<!-- START::Datetime -->
+<script src="{{ getenv('APP_ROOT_PUBLIC') }}/assets/javascript/tail-datetime/js/tail.datetime.min.js"></script>
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function(){
+        tail.DateTime(".tail-datetime-field", { /* Your Options */ });
+    });
+</script>
+<!-- START::DataTable -->
+<script src="{{ getenv('APP_THEME') }}/node_modules/vanilla-datatables/dist/vanilla-dataTables.min.js"></script>
+<script type="text/javascript">
+    var dataTable = new DataTable("#data-table");
+</script>
+<!-- START::modal admin js -->
+<script src="{{ getenv('APP_THEME') }}/js/Modal-Vanilla/js/modal-vanilla.js"></script>
+<!-- START::main js -->
+<script src="{{ getenv('APP_THEME') }}/js/main.js"></script>
+<script src="{{ getenv('APP_THEME') }}/js/toggle-list-grid.js"></script>
+<!-- START::navigation js -->
+<script src="{{ getenv('APP_THEME') }}/js/navigation.js"></script>
+<!-- START::SimpleMDE -->
+<script src="{{ getenv('APP_ROOT_PUBLIC') }}/assets/javascript/tabs.js"></script>
+</body>
+</html>

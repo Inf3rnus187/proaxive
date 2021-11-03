@@ -1,0 +1,36 @@
+<!doctype html>
+<html class="no-js" lang="fr">
+<head>
+    <meta name="robots" content="noindex, nofollow">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ getenv('APP_ROOT_PUBLIC') }}/assets/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ getenv('APP_ROOT_PUBLIC') }}/assets/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ getenv('APP_ROOT_PUBLIC') }}/assets/icons/favicon-16x16.png">
+    <!--[if lt IE 7]>
+    <meta http-equiv="refresh" content="1; URL={{ getenv('APP_ROOT_PUBLIC') }}/ie6-browser">
+    <![endif]-->
+    <title>Proaxive - {% block title %}{% endblock %}</title>
+    <!-- CSS  -->
+    <!-- START::GridLex Local -->
+    <link rel="stylesheet" href="{{ getenv('APP_ROOT_PUBLIC') }}/assets/frameworks/gridlex/gridlex.min.css">
+    <!-- START::Animate CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <!-- START::REMIXICON -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <!-- START::Layout -->
+    <link rel="stylesheet" href="{{ getenv('APP_THEME') }}/stylesheets/app.css?={{ now | date('hi') }}" type="text/css"/>
+    <!-- START::Print -->
+    <link rel="stylesheet" href="{{ getenv('APP_THEME') }}/stylesheets/print.css" type="text/css" media="print">
+</head>
+
+<body id="body-default" class="body-search client-layout">
+<div class="container">
+{% block body %}{% endblock %}
+<div class="footer-search text-center">
+        Propulsé par Proaxive {{ app_info.release }} {% if app_setting.view_version == 1%} ver.{{ app_info.number }}{% endif %}. <strong>2021</strong> Solution développée et éditée par <a href="https://www.synexolabs.com" target="_blank">SynexoLabs</a>
+</div>
+</div>
+<script src="{{ getenv('APP_THEME') }}/js/main.js"></script>
+</body>
+</html>

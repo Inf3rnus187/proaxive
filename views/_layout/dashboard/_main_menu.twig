@@ -1,0 +1,84 @@
+<div class="pe-sidebar-navigation">
+    <div class="pe-navigation-content">
+        <nav>
+            <ul>
+                <li {% if current_menu == 'home' and current_menu is defined %}class="active"{% endif %}><a href="/admin"><i class="ri-home-3-fill"></i> <span>Accueil</span></a></li>
+                {% if sessionAuth.roles_id == 1 %}
+                <li class="pe-navigation-title">Administration</li>
+                <li {% if current_menu == 'setting' and current_menu is defined %}class="active"{% endif %}><a href="/admin/setting"><i class="ri-settings-4-fill"></i> <span>Paramètres généraux</span></a>
+                </li>
+                <li class="dropdown-menu">
+                    <div class="submenu {% if current_menu == 'ausers' and current_menu is defined %}active{% endif %}">
+                        <a href="#"><i class="ri-user-2-fill"></i> <span>Utilisateurs <i class="ri-arrow-down-s-line pe-arrow-right"></i></span></a>
+                        <ul class="pe-submenu collapse">
+                            <li><a href="/admin/ausers">Liste des utilisateurs</a></li>
+                            <li><a href="/admin/add-auser">Créer un utilisateur</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li {% if current_menu == 'styles' and current_menu is defined %}class="active"{% endif %}><a href="/admin/setting/css"><i class="ri-css3-fill"></i> <span>Thèmes CSS</span></a></li>
+                <li {% if current_menu == 'company' and current_menu is defined %}class="active"{% endif %}><a href="/admin/mycompany"><i class="ri-building-fill"></i> <span>Mon entreprise</span></a></li>
+                <li {% if current_menu == 'status' and current_menu is defined %}class="active"{% endif %}><a href="/admin/status"><i class="ri-price-tag-3-fill"></i> <span>Gérer les statuts</span></a></li>
+                <li class="pe-navigation-title">Application</li>
+                {% endif %}
+                <li class="dropdown-menu">
+                    <div class="submenu {% if current_menu == 'sticky' and current_menu is defined %}active{% endif %}">
+                        <a href="#"><i class="ri-sticky-note-line"></i> <span>Notes interne <i class="ri-arrow-down-s-line pe-arrow-right"></i></span></a>
+                        <ul class="pe-submenu collapse">
+                            <li><a href="/admin/sticky">Toutes les notes</a></li>
+                            <li><a href="/admin/add-sticky">Créer une note</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="dropdown-menu">
+                    <div class="submenu {% if current_menu == 'client' and current_menu is defined %}active{% endif %}">
+                        <a href="#"><i class="ri-user-fill"></i> <span>Clients <i class="ri-arrow-down-s-line pe-arrow-right"></i></span></a>
+                        <ul class="pe-submenu collapse">
+                            <li><a href="/admin/clients">Liste des clients</a></li>
+                            <li><a href="/admin/add-client">Créer un client</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="dropdown-menu">
+                    <div class="submenu {% if current_menu == 'client' and current_menu is defined %}active{% endif %}">
+                        <a href="#"><i class="ri-building-2-line"></i> <span>Société <i class="ri-arrow-down-s-line pe-arrow-right"></i></span></a>
+                        <ul class="pe-submenu collapse">
+                            <li><a href="/admin/society">Liste des sociétés</a></li>
+                            <li><a href="/admin/add-society">Créer une société</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="dropdown-menu">
+                    <div class="submenu {% if current_menu == 'intervention' and current_menu is defined %}active{% endif %}">
+                        <a href="#"><i class="ri-list-check-2"></i> <span>Interventions <i class="ri-arrow-down-s-line pe-arrow-right"></i></span></a>
+                        <ul class="pe-submenu collapse">
+                            <li><a href="/admin/interventions">Liste des interventions</a></li>
+                            <li><a href="/admin/add-intervention">Créer une intervention</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="dropdown-menu">
+                    <div class="submenu {% if current_menu == 'equipments' and current_menu is defined %}active{% endif %}">
+                        <a href="#"><i class="ri-computer-fill"></i> <span>Equipements <i class="ri-arrow-down-s-line pe-arrow-right"></i></span></a>
+                        <ul class="pe-submenu collapse">
+                            <li><a href="/admin/equipments">Liste des équipements</a></li>
+                            <li><a href="/admin/add-equipment">Créer un équipement</a></li>
+                            <li><a href="/admin/equipments/categories">Gérer les catégories</a></li>
+                            <li><a href="/admin/equipments/brands">Gérer les marques</a></li>
+                            <li><a href="/admin/operating-systems">Gérer les OS</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="dropdown-menu">
+                    <div class="submenu {% if current_menu == 'outlay' and current_menu is defined %}active{% endif %}">
+                        <a href="#"><i class="ri-hand-coin-fill"></i> <span>Débours <i class="ri-arrow-down-s-line pe-arrow-right"></i></span></a>
+                        <ul class="pe-submenu collapse">
+                            <li><a href="/admin/outlay">Liste des débours</a></li>
+                            <li><a href="/admin/add-outlay">Créer un débours</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>

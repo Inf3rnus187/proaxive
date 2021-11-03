@@ -1,0 +1,25 @@
+{% if sessionFlash.hasFlashes %}
+    {% for type, message in sessionFlash.getFlashes %}
+        {% if type == 'success' %}
+            <div id="toast" class="toast-container toast-{{ type | raw }} {% if app_setting.notify_fixed == 1%}toast--floating{% endif%} animate__animated animate__slideInDown">
+                <div class="toast-title">Confirmation</div>
+                <div class="toast-message">{{ message | raw }}</div>
+            </div>
+        {% elseif type == 'info' %}
+            <div id="toast" class="toast-container toast-{{ type | raw }} {% if app_setting.notify_fixed == 1%}toast--floating{% endif%} animate__animated animate__slideInDown">
+                <div class="toast-title">Informations</div>
+                <div class="toast-message">{{ message | raw }}</div>
+            </div>
+        {% elseif type == 'danger' %}
+            <div id="toast" class="toast-container toast-{{ type | raw }} {% if app_setting.notify_fixed == 1%}toast--floating{% endif%} animate__animated animate__slideInDown">
+                <div class="toast-title">Erreur</div>
+                <div class="toast-message">{{ message | raw }}</div>
+            </div>
+        {% elseif type == 'warning' %}
+            <div id="toast" class="toast-container toast-{{ type | raw }} {% if app_setting.notify_fixed == 1%}toast--floating{% endif%} animate__animated animate__slideInDown">
+                <div class="toast-title">Avertissement</div>
+                <div class="toast-message">{{ message | raw }}</div>
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endif %}

@@ -1,0 +1,41 @@
+<div class="grid">
+    <div class="col-6_col-sm-12">
+        <div class="grid">
+            <div class="col-6_col-sm-12">
+                {{ form.input('s_name', 'Raison sociale', 'Nom de la société') | raw }}
+            </div>
+            <div class="col-6_col-sm-12">
+                {{ form.input('tva_number', 'TVA', 'Numéro de TVA') | raw }}
+            </div>
+        </div>
+        <div class="grid">
+            <div class="col-6_col-sm-12">
+                {{ form.input('siret_number', 'SIRET, SIREN', 'Numéro de Siret ou Siren') | raw }}
+                {{ form.input('phone', 'Téléphone', 'Numéro de téléphone') | raw }}
+            </div>
+            <div class="col-6_col-sm-12">
+                {{ form.input('naf_number', 'NAF', 'Code NAF, NACE etc') | raw }}
+                {{ form.input('phone_2', 'Téléphone (2)', 'Numéro de téléphone') | raw }}
+            </div>
+        </div>
+        {{ form.input('s_mail', 'Courriel', 'Adresse courriel de la société') | raw }}
+        {{ form.input('website', 'Site internet', 'Adresse du site internet avec https://') | raw }}
+    </div>
+    <div class="col-6_col-sm-12">
+        {{ viewAlert('info', "L'API peut mette du temps à repondre (recherche d'adresse)") | raw }}
+        {{ form.input('address', 'Adresse Postale', 'Adresse postale du client', false, 'adresse') | raw }}
+        <div class="grid">
+            <div class="col-4_sm-12">
+                {{ form.input('city', 'Ville', false, 'Valeur auto-générée', 'ville', true) | raw }}
+            </div>
+            <div class="col-4_sm-12">
+                {{ form.input('postal_code', 'Code postal', false, 'Valeur auto-générée', 'cp', true) | raw }}
+            </div>
+            <div class="col-4_col-sm-12">
+                {{ form.input('department', 'Département', false, 'Valeur auto-générée', 'department', true) | raw }}
+            </div>
+        </div>
+        {{ form.textareaDefault('about', 'Commentaires', 'Commentaires') | raw }}
+    </div>
+</div>
+{{ form.submitDefault('Enregistrer', 'primary') | raw }}

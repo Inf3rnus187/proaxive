@@ -1,0 +1,79 @@
+{% extends '_layout/dashboard/layout.twig' %}
+
+{% block title %}Gestion des paramètres du site internet{% endblock %}
+
+{% block body %}
+    {{ include('_notifications.twig') }}
+    <form method="post" class="form-big" action="">
+        <div class="card">
+            <div class="card-column d-flex">
+                {{ include('dashboard/settings/_card_aside.twig') }}
+                <div class="card-inner nopg fg-1">
+                    <div class="card-inner-header border-bottom pg1 pd-b-1">
+                        <div class="grid-12 -noGutter align-items-center">
+                            <div class="col-6_sm-12">
+                                <h3>Paramètres de la base de données</h3>
+                                Gérer la connexion à la base de données.
+                            </div>
+                            <div class="col-6_sm-12">
+                                <div class="text-right mg-b-1">
+                                    {% if viewJson is not null %}
+                                    {{ form.submitSingle('primary', 'saveParameters', 'Enregistrer', false) | raw }}
+                                    {% endif %}
+                                    {{ form.submitSingle('info', 'saveDatabase', 'Sauvegarder la BDD') | raw }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pg1">
+                        {% if viewJson is null %}
+                            {{ viewAlert('warning', "<strong>Proaxive Net Install</strong> ne permet pas de modifier l'accès à la base de données depuis le panel.") | raw }}
+                            <p>Afin de modifier l'accès à la base de données, veuillez éditer le fichier de configuration qui se trouve à la racine de l'application (.env)<br>
+                            Pour la gestion des migrations, il est également nécessaire de modifier le fichier <em>phinx.yml</em> (partie <em>production</em>)</p>
+                        {% else %}
+                            <div class="grid-12">
+                                <div class="col-6_sm-12">
+                                    <div class="bloc-table">
+                                        <table class="table-default">
+                                            <thead>
+                                                <th>Base de données actuelle</th>
+                                                <th></th>
+                                            </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Serveur de base de données</td>
+                                                        <td>{{ viewJson.db_host }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Utilisateur</td>
+                                                        <td>{{ viewJson.db_user }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Nom de la base de données</td>
+                                                        <td>{{ viewJson.db_name }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Mot de passe</td>
+                                                        <td><em>caché</em></td>
+                                                    </tr>
+                                                </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-6_sm-12">
+                                    <div class="bloc-form">
+                                        <h2>Changer de base de données</h2>
+                                        {{ form.input('db_host', "Serveur de base données", 'Ex : localhost, 127.0.0.1 etc.', "Ex : localhost, 127.0.0.1 etc.") | raw }}
+                                        {{ form.input('db_user', "Utilisateur", 'Ex : smtp.mail.com', "") | raw }}
+                                        {{ form.input('db_name', "Nom de la base de données", 'Ex : smtp.mail.com', "") | raw }}
+                                        {{ form.password('db_passwd', "Mot de passe", 'Ex : smtp.mail.com', "") | raw }}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}

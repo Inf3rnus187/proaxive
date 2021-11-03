@@ -1,0 +1,54 @@
+    <div class="grid">
+        <div class="col-6_col-sm-12">
+            <div class="form-group switch-group">
+                <input style="margin-right:1em;" type="checkbox" name="" value="" id="w_society" data-toggle="checkbox" class="switch" {% if client.society_id is not null and client.society_id is defined %}checked{% endif %}>
+                <span class="icons"><span class="icon-unchecked"></span><span class="icon-checked"></span></span><label for="with_society" class="checkbox">Associer une société ?</label>
+            </div>
+            <div class="check_display" style="display: {% if client.society_id is not null and client.society_id is defined %}block{% else %}none{% endif %};">
+                {% if society is not empty %}
+                    {{ form.select('society_id', 'Société', society, false, true) | raw }}
+                {% else %}
+                    -- Aucune société --<br>
+                    <input type="hidden" name="null">
+                    <a href="/admin/add-society" class="badge badge-light-info mg-b-1">Ajouter une société</a>
+                {% endif %}
+
+            </div>
+            <div class="grid">
+                <div class="col-6_col-sm-12">
+                    {{ form.input('lastname', 'Nom', 'Nom du client') | raw }}
+                </div>
+                <div class="col-6_col-sm-12">
+                    {{ form.input('firstname', 'Prénom', 'Prénom du client') | raw }}
+                </div>
+            </div>
+            <div class="grid">
+                <div class="col-6_col-sm-12">
+                    {{ form.input('phone', 'Téléphone fixe', 'Numéro de téléphone') | raw }}
+                </div>
+                <div class="col-6_col-sm-12">
+                    {{ form.input('mobile', 'Téléphone mobile', 'Numéro de téléphone mobile') | raw }}
+                </div>
+            </div>
+            {{ form.input('mail', 'Courriel', 'Adresse courriel du client') | raw }}
+        </div>
+        <div class="col-6_col-sm-12">
+            {{ viewAlert('info', "L'API peut mette du temps à repondre (recherche d'adresse)") | raw }}
+            {{ form.input('adress', 'Adresse Postale', 'Adresse postale du client', false, 'adresse') | raw }}
+            {{ form.inputHidden('addr_longitude', 'lg') | raw }}
+            {{ form.inputHidden('addr_latitude', 'lt') | raw }}
+            <div class="grid">
+                <div class="col-4_sm-12">
+                    {{ form.input('city', 'Ville', false, 'Valeur auto-générée', 'ville', true) | raw }}
+                </div>
+                <div class="col-4_sm-12">
+                    {{ form.input('zipcode', 'Code postal', false, 'Valeur auto-générée', 'cp', true) | raw }}
+                </div>
+                <div class="col-4_col-sm-12">
+                    {{ form.input('department', 'Département', false, 'Valeur auto-générée', 'department', true) | raw }}
+                </div>
+            </div>
+            {{ form.checkbox('sleeping', 'En sommeil ?') | raw }}
+        </div>
+    </div>
+{{ form.submitDefault('Enregistrer', 'primary') | raw }}

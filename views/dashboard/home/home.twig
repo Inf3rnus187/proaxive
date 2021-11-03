@@ -1,0 +1,268 @@
+{% extends '_layout/dashboard/layout.twig' %}
+
+{% block title %}Administration{% endblock %}
+
+{% block body %}
+    <div class="p-relative">
+    <div class="grid">
+        <!-- card 01 -->
+        {% if app_setting.tile_client == 1 %}
+        <div class="col">
+            <a href="/admin/clients" class="ih-card ih-card-block">
+                <div class="ih-card-body ih-bg-default">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="rounded-circle ih-card-icon bg-primary">
+                            <i class="ri-user-fill"></i>
+                        </div>
+                        <div class="text-right">
+                            <h2 class="mg-0">{{ countClient }}</h2>
+                            <h5>Clients</h5>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% endif %}
+        <!-- card 02 -->
+        {% if app_setting.tile_equipment == 1 %}
+        <div class="col">
+            <a href="/admin/equipments" class="ih-card ih-card-block">
+                <div class="ih-card-body ih-bg-default">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="rounded-circle ih-card-icon bg-primary">
+                            <i class="ri-computer-fill"></i>
+                        </div>
+                        <div class="text-right">
+                            <h2 class="mg-0">{{ countEquipment }}</h2>
+                            <h5>Équipements</h5>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% endif %}
+        <!-- card 03 -->
+        {% if app_setting.tile_inter == 1 %}
+        <div class="col">
+            <a href="/admin/interventions" class="ih-card ih-card-block">
+                <div class="ih-card-body ih-bg-default">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="rounded-circle ih-card-icon bg-primary">
+                            <i class="ri-tools-fill"></i>
+                        </div>
+                        <div class="text-right">
+                            <h2 class="mg-0">{{ countIntervention }}</h2>
+                            <h5>Interventions</h5>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% endif %}
+        <!-- card 04 -->
+        {% if app_setting.tile_outlay == 1 %}
+        <div class="col">
+            <a href="/admin/outlay" class="ih-card ih-card-block">
+                <div class="ih-card-body ih-bg-default">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="rounded-circle ih-card-icon bg-primary">
+                            <i class="ri-hand-coin-fill"></i>
+                        </div>
+                        <div class="text-right">
+                            <h2 class="mg-0">{{ countOutlay }}</h2>
+                            <h5>Débours</h5>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% endif %}
+        <!-- card 04 -->
+        {% if app_setting.tile_stickies == 1 %}
+            <div class="col">
+                <a href="/admin/sticky" class="ih-card ih-card-block">
+                    <div class="ih-card-body ih-bg-default">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div class="rounded-circle ih-card-icon bg-primary">
+                                <i class="ri-sticky-note-line"></i>
+                            </div>
+                            <div class="text-right">
+                                <h2 class="mg-0">{{ countSticky }}</h2>
+                                <h5>Notes</h5>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        {% endif %}
+    </div>
+    <!-- Card Home -->
+    <!-- User connected bloc -->
+    <div class="grid">
+        <div class="col-4_sm-12_lg-12">
+            <div class="card card-user">
+                <div class="card-header bg-primary bg-soft radius-top-card">
+                    <div class="pd-b-2">
+                        <h4 class="card-title">Heureux de vous retrouver !</h4>
+                        <span>Vos statistiques.</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="grid-noGutter">
+                        <div class="col-4_sm-12_lg-12">
+                            <div class="avatar-md profil-user-avatar mg-b-1">
+                                <img class="rounded-circle img-thumbnail" src="{{ getenv('APP_THEME') }}/images.png" alt="">
+                            </div>
+                            <strong>{{ sessionAuth.pseudo }}</strong><br>
+                            <span>{{ sessionAuth.title }}</span>
+                        </div>
+                        <div class="col-8_sm-12_lg-12">
+                            <div class="user-stats">
+                                <div class="grid-2 grid-noGutter">
+                                    <div class="col">
+                                        <h5>{{ myCountInter }}</h5>
+                                        <p class="nomg">Interventions</p>
+                                    </div>
+                                    <div class="col">
+                                        <h5>{{ myCountOutlay }}</h5>
+                                        <p class="nomg">Débours</p>
+                                    </div>
+                                </div>
+                                <div class="mg-t-1">
+                                    <a class="btn-sm btn-primary" href="/admin/myaccount">Mon profil <i class="ri-arrow-right-line"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-8_sm-12_lg-12">
+            <div class="card">
+                <div class="card-header"><h4 class="card-title">Notes épinglées</h4></div>
+                <div class="card-body">
+                    <div id="stick__sticky">
+                        {% if stickyStick is empty %}
+                            {{ viewAlert('info', "Il n'y a aucune note épinglées") | raw }}
+                        {% else %}
+                        <div class="grid-12">
+                            {% for item in stickyStick %}
+                                <div class="col-3_sm-12">
+                                    <a class="popup-trigger" href="{{ item.UrlAdmin }}" data-popup-trigger="modal-{{ sticky.id }}">
+                                        {{ include('sticky/admin/_item.twig') }}
+                                    </a>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Interventions -->
+    <div class="grid">
+        <div class="col-6_sm-12_lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Vos interventions en cours</h4>
+                </div>
+                <div class="card-table">
+                    {% if interInProgress is empty %}
+                    {{ viewAlert('info', "Il n'y a aucune intervention en cours") | raw }}
+                    {% else %}
+                        <table class="table-default">
+                            <thead>
+                            <tr>
+                                <th>N°</th>
+                                <th>Date</th>
+                                <th>Client</th>
+                                <th>Statut</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for interprogress in interInProgress %}
+                                <tr>
+                                    <td><a href="{{ interprogress.UrlAdmin(interprogress.idi) }}">{{ interprogress.number }}</a></td>
+                                    <td>{{ interprogress.icreated | format_date('none', 'd, MMM Y', null, 'gregorian', 'fr') }}</td>
+                                    <td>{{ interprogress.fullname }}</td>
+                                    <td>{{ labelCustom(interprogress.bgcolor, interprogress.txtcolor, interprogress.tstatus) | raw }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-6_sm-12_lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Vos interventions cloturées</h4>
+                </div>
+                <div class="card-table">
+                    {% if interInClose is empty %}
+                    {{ viewAlert('info', "Il n'y a aucune intervention cloturée") | raw }}
+                    {% else %}
+                        <table class="table-default">
+                            <thead>
+                            <tr>
+                                <th>N°</th>
+                                <th>Date</th>
+                                <th>Client</th>
+                                <th>Cloture</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for interclose in interInClose %}
+                                <tr>
+                                    <td><a href="{{ interclose.UrlAdmin(interclose.idi) }}">{{ interclose.number }}</a></td>
+                                    <td>{{ interclose.icreated | format_date('none', 'd, MMM Y', null, 'gregorian', 'fr') }}</td>
+                                    <td>{{ interclose.fullname }}</td>
+                                    <td>{{ interclose.close_date | format_date('none', 'd, MMM Y', null, 'gregorian', 'fr') }} <i class="icofont-check-alt"></i></td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Clients and Workshop-->
+    <div class="grid">
+        <div class="col-4_sm-12_lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Clients récents</h4>
+                </div>
+                <div class="card-body">
+                    {% if clients is empty %}
+                    {{ viewAlert('info',"Il n'y a aucun client enregistré") | raw }}
+                    {% else %}
+                    {% for client in clients %}
+                        {{ include('_layout/dashboard/_thumbnail_client.twig') }}
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-4_sm-12_lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">En atelier</h4>
+                </div>
+                <div class="card-body">
+                    {% if equipmentInWork is empty %}
+                    {{ viewAlert('info',"Il n'y a aucun équipement en atelier") | raw }}
+                    {% else %}
+                    {% for item in equipmentInWork %}
+                        {{ include('_layout/dashboard/_thumbnail_equipement.twig') }}
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+ </div>
+{% endblock %}

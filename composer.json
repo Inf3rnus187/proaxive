@@ -1,0 +1,48 @@
+{
+    "name": "selmak-fr/proaxive",
+    "description": "Gestion d'intervention informatique en ligne",
+    "type": "project",
+    "keywords": [
+        "management",
+        "computer",
+        "intervention"
+    ],
+    "homepage": "https://www.proaxive.fr/",
+    "license": "GPL-3.0-only",
+    "authors": [
+        {
+            "name": "SelMaK-fr",
+            "email": "synexolabs@gmail.com"
+        }
+    ],
+    "support": {
+        "source": "https://github.com/SelMaK-fr/proaxive",
+        "docs": "https://proaxive.fr/docs/"
+    },
+    "config": {
+        "platform-check": false
+    },
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=7.4",
+        "twig/twig": "^v3.3.3",
+        "aptoma/twig-markdown": "^3.4.0",
+        "michelf/php-markdown": "^1.9.0",
+        "robmorgan/phinx": "^0.12.8",
+        "swiftmailer/swiftmailer": "^v6.2.7",
+        "buzzingpixel/twig-getenv": "^1.0.1",
+        "verot/class.upload.php": "^2.1.0",
+        "mailjet/mailjet-apiv3-php": "^v1.5.5",
+        "twig/extra-bundle": "^v3.3.3",
+        "twig/intl-extra": "v3.3.3",
+        "christian-riesen/otp": "^2.7",
+        "ext-json": "*",
+        "creitive/breadcrumbs": "^v3.3.2",
+        "ifsnop/mysqldump-php": "^2.9",
+        "symfony/dotenv": "^v5.3.8"
+    },
+    "require-dev": {
+        "filp/whoops": "^2.14.4",
+        "symfony/yaml": "^v5.3.6"
+    }
+}

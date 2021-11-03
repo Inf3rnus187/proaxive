@@ -1,0 +1,9 @@
+<div class="admin-form">
+    <div class="grid-12">
+        <div class="col-4_sm-12">{{ form.input('title', "Titre de la note", "Titre de la note") | raw }}</div>
+        <div class="col-4_sm-12">{{ form.inputColorRgba('bgcolor', "Couleur de fond", "") | raw }}</div>
+        <div class="col-4_sm-12">{{ form.inputColor('txtcolor', 'Couleur du texte', "") | raw }}</div>
+    </div>
+    {{ form.textareaMde('content', "Contenu de la note", "") | raw }}
+    {{ form.checkbox('stick', 'Epingler cette note ?') | raw }}
+</div>

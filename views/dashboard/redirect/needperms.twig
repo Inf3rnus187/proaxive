@@ -1,0 +1,21 @@
+{% extends '_layout/dashboard/layout.twig' %}
+
+{% block title %}Permission refusée !{% endblock %}
+
+{% block body %}
+    {{ include('_notifications.twig') }}
+<div class="card">
+    <div class="card-body text-center">
+        <div class="need-bloc">
+            <div class="need_img"><i class="ri-shield-keyhole-fill" style="font-size:8.5em;"></i></div>
+            <h2 class="text-danger">Permission refusée</h2>
+            <div style="font-size:1.2em;">
+                Vous n'avez pas l'autorisation nécessaire pour y accéder
+            </div>
+            <p>
+                <a href="/admin" class="btn btn-secondary">Revenir à l'accueil</a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

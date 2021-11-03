@@ -1,0 +1,70 @@
+{% extends '_layout/dashboard/layout.twig' %}
+
+{% block title %}Modifier un administrateur{% endblock %}
+
+{% block body %}
+    <!-- START .cards -->
+    <div class="section--admin">
+        <div class="container">
+            <div class="admin-content">
+                {{ include('_notifications.twig') }}
+                <div class="admin-form">
+                    <form class="form-big" method="post" action="#">
+                        <div class="grid">
+                            <div class="col-6_sm-12_lg-12">
+                                <div class="card">
+                                    <div class="card-header"><h4 class="card-title">Données du compte</h4></div>
+                                    <div class="card-body">
+                                        {% include 'ausers/admin/_form.twig' %}
+                                        {{ form.submitDefault('Sauvegarder', 'primary', 'updateaccount') | raw }}
+                                        <div class="separator separator-dashed mg-tb-2"></div>
+                                        Vous pouvez supprimer cet utilisateur, action irréversible.<br>
+                                        <i>Cela ne supprimera pas ses interventions</i>
+                                        <p class="mg-t-1">
+                                            <button type="button" data-popup-trigger="delete-modal-{{ auser.id }}" class="btn-sm btn-light-danger popup-trigger">Supprimer cet utilisateur</button>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6_sm-12_lg-12">
+                                <div class="card mg-b-2">
+                                    <div class="card-header"><h4 class="card-title">Authentification à double facteur</h4></div>
+                                    <div class="card-body">
+                                        <p>
+                                            Cette méthode ajoute une couche de protection à votre compte administrateur.<br>
+                                            L'activation de cette option nécessite de lire un QR Code.
+                                        </p>
+                                        {% if auser.key_totp is empty %}
+                                            <a href="/admin/ausers/totp" class="btn btn-primary"><i class="ri-key-2-fill"></i> Activer l'authentification à double facteur</a>
+                                            {% elseif auser.key_totp is not empty %}
+                                                <span class="txtprimary d-block mg-b-1">L'authentification à double facteur est activée sur votre compte.</span>
+                                                <a href="#totp_desactivate" class="btn btn-danger">Désactiver l'authentification à double facteur</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header"><h4 class="card-title">Modifier le mot de passe</h4></div>
+                                    <div class="card-body">
+                                        {{ form.inputEmpty('password', 'Nouveau mot de passe', false, false, true, {'type': 'password'}) | raw }}
+                                        {{ form.inputEmpty('confirmpassword', 'Confirmez le mot de passe',false, false, true,  {'type': 'password'}) | raw }}
+                                        {{ form.submitDefault('Changer le mot de passe', 'primary', 'editpassword') | raw }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <form method="post" action="/admin/auser/totp/desactivate">
+                        <input type="hidden" name="key_totp" value="key_totp">
+                      {{ include('dashboard/_modal.twig', {'id' : 'totp_desactivate', 'title' : 'Parametre utilisateur', 'content' : "L'authentification à double facteurs est une sécurité supplémentaire pour vous connecter à Proaxive.", 'endMessage' : 'Êtes-vous certain de vouloir désactiver cette option ?' }) }}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END .cards -->
+    <!-- start: modal delete -->
+    <form method="post" action="/admin/auser/delete">
+        {{ include('/dashboard/_modal-delete.twig', {'id': auser.id, 'title': auser.fullname }) }}
+        <!-- end: modal delete -->
+    </form>
+{% endblock %}

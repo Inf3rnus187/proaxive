@@ -1,0 +1,16 @@
+<div class="thumbnail thumbnail-bloc mg-b-1">
+    <a href="{{ item.urlAdmin(item.o_id) }}">
+        <div class="d-flex align-items-center">
+            <div class="thumb-b-img">
+                <i class="ri-hand-coin-line"></i>
+            </div>
+            <div class="thumb-b-ctn">
+                {{ item.sign | raw }}
+                <p>
+                    <i>{{ item.number }}</i> - <i class="ri-money-euro-circle-line"></i> {{ item.amount }}<br>
+                    <i class="ri-time-line"></i> {{ item.idate | date('d-m-Y') }}
+                </p>
+            </div>
+        </div>
+    </a>
+</div>

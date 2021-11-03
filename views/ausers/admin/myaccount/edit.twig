@@ -1,0 +1,27 @@
+{% extends '_layout/dashboard/layout.twig' %}
+
+{% block title %}Mon compte - {{ auser.pseudo }}{% endblock %}
+
+{% block body %}
+    <div class="grid">
+        <div class="col-12_sm-12_lg-12">
+            {{ include('_notifications.twig') }}
+            <form method="post" action="" class="form-big">
+                <div class="card">
+                    <div class="card-column d-flex">
+                        <div class="card-aside card-aside-left user-aside">
+                            {{ include('ausers/admin/myaccount/_profil.twig') }}
+                        </div>
+                        <div class="card-inner fg-1">
+                            <strong>{{ iplocal }}</strong>
+                            {{ form.input('mail', "Adresse email", false, '<i class="ri-information-fill"></i> Est aussi le "login" de connexion', '') | raw }}
+                            {{ form.input('fullname', "Nom complet", false, '', '') | raw }}
+                            {{ form.input('pseudo', "Pseudonyme", false, false, '') | raw }}{{ form.input('address_ip', "Votre adresse IP (FAI)", false, 'Ca permet de vous exclure des compteurs de vue', '') | raw }}
+                            {{ form.submit('primary', 'Enregistrer') | raw }}
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

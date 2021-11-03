@@ -1,0 +1,63 @@
+{% extends '_layout/dashboard/layout.twig' %}
+
+{% block title %}Gestion des entreprises{% endblock %}
+
+{% block body %}
+    <!-- START .cards -->
+    <div class="section--admin">
+        <div class="container">
+            <form class="form-big" method="post" enctype="multipart/form-data">
+            <div class="admin-content">
+                {{ include('_notifications.twig') }}
+                <div class="card">
+                    <div class="card-header">
+                        <div class="grid-12 -noGutter">
+                            <div class="col-6_sm-12">
+                                <h5>Modifier une entreprise</h5>
+                                <span>Ces informations sont visibles sur les documents générés par Proaxive (débours, interventions etc.)</span>
+                            </div>
+                            <div class="col-6_sm-12">
+                                <div class="col-6_sm-12 text-right">
+                                    <button type="button" data-popup-trigger="logo-modal" class="btn btn-info popup-trigger"><i class="ri-upload-fill"></i> Remplacer/charger le logo</button>
+                                    {{ form.submitSingle('primary', 'saveData', 'Sauvegarder', false) | raw }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="admin-form">
+                                {{ include('company/admin/_form.twig') }}
+                                <!-- MODAL -->
+                                <div class="popup-modal shadow" data-popup-modal="logo-modal">
+                                    <i class="ri-close-line popup-modal__close bg-danger rounded" aria-hidden="true"></i>
+                                    <div class="popup-modal-header">
+                                        <h1 class="font-weight-bold">
+                                            Remplacer le logo de l'entreprise
+                                        </h1>
+                                    </div>
+                                    <div class="popup-modal-body">
+                                        {% if company.logo is not empty %}
+                                            <div class="text-center">
+                                                <img width="40%" src="{{ getenv('APP_ROOT_PUBLIC') }}/uploads/company/{{ company.logo }}" alt="">
+                                            </div>
+                                        {% endif %}
+                                        <p>
+                                            <input type="file" class="form-input" name="logo" id="logo" title="Parcourir les fichiers"/>
+                                        </p>
+                                    </div>
+                                    <div class="popup-modal-footer">
+                                        <div class="form-group">
+                                            {{ form.submitSingle('primary', 'saveLogo', 'Importer', false) | raw }}                                            <div class="clear"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /MODAL -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
+    <!-- END .cards -->
+{% endblock %}

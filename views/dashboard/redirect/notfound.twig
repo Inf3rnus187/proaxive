@@ -1,0 +1,21 @@
+{% extends '_layout/dashboard/layout.twig' %}
+
+{% block title %}Page introuvable !{% endblock %}
+
+{% block body %}
+    {{ include('_notifications.twig') }}
+    <div class="card">
+        <div class="card-body text-center">
+            <div class="need-bloc">
+                <div class="need_img"><i class="ri-file-damage-line" style="font-size:8.5em;"></i></div>
+                <h2 class="text-danger">Erreur 404</h2>
+                <div style="font-size:1.2em;">
+                    Cette page n'existe pas ou plus !
+                </div>
+                <p>
+                    <a href="/admin" class="btn btn-secondary">Revenir à l'accueil</a>
+                </p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

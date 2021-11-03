@@ -1,0 +1,41 @@
+{% extends '_layout/dashboard/layout.twig' %}
+
+{% block title %}Nouveau débours{% endblock %}
+
+{% block stylesheets %}
+    <!-- START::SimpleMDE -->
+    <link rel="stylesheet" href="{{ getenv('APP_ROOT_PUBLIC') }}/assets/javascript/simplemde/simplemde.min.css">
+{% endblock %}
+
+{% block javascripts %}
+<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+<script>
+    [].forEach.call(document.getElementsByClassName('area-mdeditor'),element => {
+    const simplemde = new SimpleMDE({
+    element: element,
+});
+});
+</script>
+{% endblock %}
+
+{% block body %}
+    <div class="section--admin">
+        <div class="container">
+            {{ include('_notifications.twig') }}
+            <div class="admin-content">
+                <form class="form-big" method="post">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Créer un débours</h4>
+                        </div>
+                        <div class="card-body">
+                            {{ include('outlay/admin/_form.twig', {'withClient' : 1}) }}
+                            {{ form.submitSingle('primary', 'Créer le débours') | raw }}
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- END .cards -->
+{% endblock %}

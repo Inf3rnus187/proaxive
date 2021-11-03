@@ -1,0 +1,23 @@
+<!-- START Toogle Grid and List CONTENT 0{{ item.id }} -->
+<div class="is--body">
+    <div class="grid0--icon">
+        <div class="g_icon">
+            <div class="is--icon">
+                <i class="ri-hand-coin-fill"></i>
+            </div>
+        </div>
+        <div class="is--body-display">
+            <div class="is--section is--section-td is--section-start">
+                <span class="ctn--title"><a href="{{ item.urlAdmin(item.o_id) }}">{{ item.number }}</a></span>
+            </div>
+            <div class="is--section is--section-td">
+                <i class="ri-money-euro-circle-line"></i> <strong>{{ item.amount }}</strong>
+            </div>
+            <div class="is--section is--section-td">{{ item.idate | date('d-m-Y') }}</div>
+            <div class="is--section is--section-td">
+                {{ item.sign | raw }}
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END Toogle Grid and List CONTENT 0{{ item.id }} -->

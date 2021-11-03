@@ -1,0 +1,26 @@
+<div class="card mg-b-1">
+    <div class="card-body">
+        <div class="text-center">
+            <h2>Depuis l'atelier</h2>
+        </div>
+        <div class="text-center mg-t-1 mg-b-1">
+            <div class="gallery">
+                <div class="splide">
+                    <div class="splide__track">
+                        <ul class="splide__list">
+                            {% for photo in photos %}
+                                <li class="splide__slide">
+                                    <a data-fslightbox="gallery" href="/public/uploads/intervention/{{ intervention.id }}/gallery/{{ photo }}">
+                                    <img style="border-radius: 10px;" class="img-responsive" src="/public/uploads/intervention/{{ intervention.id }}/gallery/{{ photo }}" alt="">
+                                    </a>
+                                </li>
+
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                <span class="d-block m-t-1">Photos/captures liées à l'intervention.</span>
+            </div>
+        </div>
+    </div>
+</div>

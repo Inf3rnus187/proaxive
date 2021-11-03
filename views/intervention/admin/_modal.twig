@@ -1,0 +1,136 @@
+<!-- Modal View Equipment -->
+<div class="popup-modal shadow" data-popup-modal="equipment-{{ equipment.id }}">
+    <i class="ri-close-line popup-modal__close bg-danger rounded" aria-hidden="true"></i>
+    <div class="popup-modal-header">
+        <h1 class="font-weight-bold">
+            {{ equipment.name }}
+        </h1>
+    </div>
+    <div class="popup-modal-body">
+        <table class="table-default">
+            <thead>
+                <tr>
+                    <th colspan="2">Détail de la configuration système</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Processeur</strong></td>
+                    <td>{{ equipment.r_cpu }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Socket</strong></td>
+                    <td>{{ equipment.r_socket }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Bios version</strong></td>
+                    <td>{{ equipment.r_bios }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Mémoire vive</strong></td>
+                    <td>{{ equipment.r_ram }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Modèle</strong></td>
+                    <td>{{ equipment.r_manufacturer }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Carte mère</strong></td>
+                    <td>{{ equipment.r_mb }}</td>
+                </tr>
+                <tr>
+                    <td><strong>GPU</strong></td>
+                    <td>{{ equipment.r_cg }}</td>
+                </tr>
+                <tr>
+                    <td><strong>SN</strong></td>
+                    <td>{{ equipment.r_sn }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!--/modal-->
+
+<!-- Modal Close Intervention -->
+<div class="popup-modal shadow" data-popup-modal="close-{{ intervention.id }}">
+    <i class="ri-close-line popup-modal__close bg-danger rounded" aria-hidden="true"></i>
+    <div class="popup-modal-header">
+        <h1 class="font-weight-bold">
+            Compte rendu
+        </h1>
+    </div>
+    <div class="popup-modal-body">
+        {{ form.textareaMde('report','Compte rendu', false) | raw }}
+    </div>
+    <div class="popup-modal-footer">
+        <div class="form-group">
+            <button type="submit" name="cloture" class="btn btn-primary"><i class="ri-check-fill"></i> Cloturer</button>
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>
+<!--/modal-->
+
+<!-- Modal Add BAO Rapport -->
+<div class="popup-modal shadow" data-popup-modal="add-rapport-bao">
+    <i class="ri-close-line popup-modal__close bg-danger rounded" aria-hidden="true"></i>
+    <div class="popup-modal-header">
+        <h1 class="font-weight-bold">
+            Ajouter un rapport BAO
+        </h1>
+    </div>
+    <div class="popup-modal-body">
+        {{ viewAlert('info', 'Seuls les fichiers <strong>.txt</strong> sont autorisés ici.') | raw }}
+        <p>Pour en savoir plus sur l'outil BAO -&gt; <a href="https://www.isergues.fr/bao.php" target="_blank">BAO par Bastien | ²</a></p>
+        <input type="file" class="form-input" name="baofiles" id="file_bao" title="Parcourir les fichiers">
+    </div>
+    <div class="popup-modal-footer">
+        <div class="form-group">
+            <button type="submit" name="send_file" class="btn btn-primary"><i class="ri-check-fill"></i> Envoyer</button>
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>
+<!--/modal-->
+
+<!-- Modal Add photos gallery -->
+<div class="popup-modal shadow" data-popup-modal="add-photos-gallery">
+    <i class="ri-close-line popup-modal__close bg-danger rounded" aria-hidden="true"></i>
+    <div class="popup-modal-header">
+        <h1 class="font-weight-bold">
+            Charger des photos
+        </h1>
+    </div>
+    <div class="popup-modal-body">
+        {{ viewAlert('info', 'Pour charger plusieurs photos, restez appuyer sur CTRL + clique gauche') | raw }}
+        <input type="file" class="form-input" id="i_gallery" title="Parcourir les fichiers" name="i_gallery[]" multiple>
+    </div>
+    <div class="popup-modal-footer">
+        <div class="form-group">
+            <button type="submit" name="i_gallery" class="btn btn-primary"><i class="ri-check-fill"></i> Charger</button>
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>
+<!--/modal-->
+
+<!-- Modal Add photos gallery -->
+<div class="popup-modal shadow" data-popup-modal="add-photos-principal">
+    <i class="ri-close-line popup-modal__close bg-danger rounded" aria-hidden="true"></i>
+    <div class="popup-modal-header">
+        <h1 class="font-weight-bold">
+            Charger une photo principale
+        </h1>
+    </div>
+    <div class="popup-modal-body">
+        <input type="file" class="form-input" name="i_photo" id="i_photo" title="Parcourir les fichiers">
+    </div>
+    <div class="popup-modal-footer">
+        <div class="form-group">
+            <button type="submit" name="i_photo" class="btn btn-primary"><i class="ri-check-fill"></i> Charger</button>
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>
+<!--/modal-->

@@ -1,0 +1,140 @@
+{% extends '_layout/dashboard/layout.twig' %}
+
+{% block title %}Compte client - {{ client.fullname }}{% endblock %}
+
+
+{% block body %}
+    <div class="grid">
+        <div class="col-12_sm-12_lg-12">
+            <form action="" class="form-big">
+                <div class="card">
+                    <div class="card-column d-flex">
+                        {{ include('clients/admin/_aside_profil.twig') }}
+                        <div class="card-inner nopg fg-1">
+                            <!-- Equipements -->
+                            <div id="equipments">
+                                <div class="card-inner-header border-bottom pg1 pd-b-1">
+                                    <div class="grid-12 --noGutter">
+                                        <div class="col-6_sm-12">
+                                            <h3>Ses équipements</h3>
+                                            <span class="d-block">Équipements enregistrés en base de données</span>
+                                        </div>
+                                        <div class="col-6_sm-12 text-right">
+                                            <a href="/admin/client/{{ client.id }}/add-equipment" class="btn btn-primary" title="Ajouter un équipement"><i class="ri-add-circle-fill"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="pg1 pd-b-0">
+                                    <div class="card-inner-bloc">
+                                        <div class="cib--content">
+                                            {% if equipments is empty %}
+                                                {{ viewAlert('info', "Aucun équipement enregistré") | raw }}
+                                            {% else %}
+                                                <div class="grid-12">
+                                                    {% for item in equipments %}
+                                                        <div class="col-4_sm-12_lg-12">
+                                                            {{ include('_layout/dashboard/_thumbnail_equipement.twig') }}
+                                                        </div>
+                                                    {% endfor %}
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Interventions -->
+                            <div id="interventions">
+                                <div class="card-inner-header border-bottom pg1 pd-b-1">
+                                    <div class="grid-12 --noGutter">
+                                        <div class="col-6_sm-12">
+                                            <h3>Ses interventions</h3>
+                                            <span class="d-block">Interventions enregistrés en base de données</span>
+                                        </div>
+                                        <div class="col-6_sm-12 text-right">
+                                            <a href="/admin/client/{{ client.id }}/add-intervention" class="btn btn-primary" title="Créer une intervention"><i class="ri-add-circle-fill"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="pg1 pd-b-0">
+                                    <div class="card-inner-bloc">
+                                        <div class="cib--content">
+                                            {% if interventions is empty %}
+                                                {{ viewAlert('info', "Aucune intervention enregistrée pour ce client") | raw }}
+                                            {% else %}
+                                                <div class="item-single toggle-grid0-list item-single--grid0">
+                                                    <!-- START Table Mod -->
+                                                    <!-- THEAD -->
+                                                    <div class="is--header tr th">
+                                                        <div class="is--td is--header-start">Dénomination</div>
+                                                        <div class="is--td">Numéro</div>
+                                                        <div class="is--td">Date</div>
+                                                        <div class="is--td">Ordinateur</div>
+                                                    </div>
+                                                    <!-- /.THEAD -->
+                                                    <!-- END Table Mod -->
+                                                    {% for item in interventions %}
+                                                        {{ include('/_layout/items/_item_intervention.twig') }}
+                                                    {% endfor %}
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Outlay -->
+                            <div id="outlay">
+                                <div class="card-inner-header border-bottom pg1 pd-b-1">
+                                    <div class="grid-12 --noGutter">
+                                        <div class="col-6_sm-12">
+                                            <h3>Ses débours</h3>
+                                            <span class="d-block">Débours enregistrés en base de données</span>
+                                        </div>
+                                        <div class="col-6_sm-12 text-right">
+                                            <a href="/admin/client/{{ client.id }}/add-outlay" class="btn btn-primary" title="Créer un débours"><i class="ri-add-circle-fill"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="pg1 pd-b-0">
+                                    <div class="card-inner-bloc">
+                                        <div class="cib--content">
+                                            {% if outlay is empty %}
+                                                {{ viewAlert('info', "Aucune intervention enregistrée pour ce client") | raw }}
+                                            {% else %}
+                                                <div class="item-single toggle-grid0-list item-single--grid0">
+                                                    <!-- START Table Mod -->
+                                                    <!-- THEAD -->
+                                                    <div class="is--header tr th">
+                                                        <div class="is--td is--header-start">Numéro</div>
+                                                        <div class="is--td">Montant</div>
+                                                        <div class="is--td">Date</div>
+                                                        <div class="is--td">État</div>
+                                                    </div>
+                                                    <!-- /.THEAD -->
+                                                    <!-- END Table Mod -->
+                                                    {% for item in outlay %}
+                                                        {{ include('/_layout/items/_item_outlay.twig') }}
+                                                    {% endfor %}
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mg-t-2">
+                    <div class="card-body">
+                        <div class="buttons-toggle mg-r-1 text-right">
+                            <div class="list"><i class="ri-list-check"></i></div><div class="grid0"><i class="ri-grid-line"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <form method="post" action="/admin/client/delete">
+        <input type="hidden" value="{{ client.id }}" name="id">
+        {{ include('dashboard/_modal-delete.twig', {id:client.id , title:client.fullname, 'note': 'Cela supprimera toutes ses données'}) }}
+    </form>
+{% endblock %}

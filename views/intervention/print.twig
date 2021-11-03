@@ -1,0 +1,64 @@
+{% extends '_layout/layout.twig' %}
+
+{% block title %} Intervention n°{{ intervention.number }} du {{ intervention.created_at | date('d-m-Y') }}  {% endblock %}
+
+{% block javascripts %}
+<script language="javascript">
+    function printDiv(divName){
+        var printContents = document.getElementById(divName).innerHTML;
+        var originalContents = document.body.innerHTML;
+        document.body.innerHTML = printContents;
+
+        window.print();
+        document.body.innerHTML = originalContents;
+    }
+    function isChecked(event){
+        if(event.getAttribute('checked') === null){
+            event.setAttribute('checked','');
+        }
+        else{
+            event.removeAttribute('checked');
+        }
+    }
+</script>
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ getenv('APP_ROOT_PUBLIC') }}/assets/styles/default-css/print-intervention/print.css" media="print">
+{% endblock %}
+
+{% block body %}
+    <div class="title-page shadow-sm">
+        <div class="d-flex justify-content-space-between align-item-center">
+            <div>
+                <h1><span>{{ company.cname }}</span></h1>
+                <span>Suivez ce qu'il se passe sur votre équipement informatique</span>
+            </div>
+            <div class="inter-action text-right">
+                <ul>
+                    <li><button onclick="printDiv('printpdf');"><i class="ri-printer-line"></i></button></li>
+                    <li><a href="/i/{{ intervention.number_link }}"><i class="ri-arrow-go-back-line"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Imprimer le bon d'intervention</h4>
+            <span> Vous pouvez imprimer votre bon ici. Une version non privée vous sera remise en même temps que votre équipement. </span>
+        </div>
+        <div class="card-body">
+            {% if intervention.start is null %}
+                <div class="container">
+                    <div class="alert alert-info mt1">Le bon d'intervention sera disponible une fois l'intervention débutée.</div>
+                    <p>
+                        <a href="/i/{{ intervention.number_link }}" class="btn btn-secondary">Retour au suivi</a>
+                    </p>
+                </div>
+            {% else %}
+                {{ include('templates/print_intervention.twig') }}
+            {% endif %}
+        </div>
+    </div>
+    <div class="mg-t-2 mg-b-2"></div>
+{% endblock %}

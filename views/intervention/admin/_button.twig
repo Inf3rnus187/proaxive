@@ -1,0 +1,25 @@
+<h3 class="mg-b-1">Actions pour cette intervention</h3>
+{% if intervention.closed is null %}
+{{ form.submitSingle('info d-block w100','update_inter', 'Mettre à jour la date', 'time-fill') | raw }}
+{% endif %}
+<a href="/admin/intervention/html/{{ intervention.id }}" title="Fiche d'intervention HTML" class="btn btn-info d-block" target="_blank"><i class="ri-file-pdf-fill"></i> Fiche HTML</a>
+<!--
+<a href="/admin/intervention/pdf/{{ intervention.id }}" title="Fiche d'intervention PDF" class="btn btn-info" target="_blank"><i class="icofont-file-pdf"></i> PDF</a>
+-->
+{% if intervention.back_home is null %}
+{{ form.submitSingle('warning d-block w100', 'backhome', 'Rendre le matériel', 'truck-fill') | raw }}
+{% else %}
+<span class="btn btn-primary d-block"><i class="ri-check-fill"></i> Rendu le {{ intervention.back_home | date('d-m-y') }}</span><br>
+{% endif %}
+{{ form.submitSingle('primary d-block w100', 'sendmail', 'Envoyer le mail', 'mail-send-fill') | raw }}
+<hr>
+{% if intervention.rapport_bao is empty %}
+<button type="button" data-popup-trigger="add-rapport-bao" class="btn btn-info d-block w100 popup-trigger"><i class="ri-file-text-line"></i> Ajouter rapport BAO</button>
+{% else %}
+<a href="/admin/intervention/{{ intervention.id }}/rapport/bao" class="btn btn-primary d-block"><i class="ri-edit-2-fill"></i> Modifier rapport BAO</a>
+{% endif %}
+{% if intervention.closed == 1 %}
+<button type="button" data-popup-trigger="close-{{ intervention.id }}" class="btn btn-primary d-block w100 popup-trigger"><i class="ri-edit-2-fill"></i> Modifier le compte rendu</button>
+{% else %}
+<button type="button" data-popup-trigger="close-{{ intervention.id }}" class="btn btn-danger d-block w100 popup-trigger"><i class="ri-close-circle-fill"></i> Cloturer</button>
+{% endif %}

@@ -1,0 +1,16 @@
+<div class="thumbnail thumbnail-bloc mg-b-1">
+    <a class="{% if item.status == 0 %}equipment-out{% endif %}" href="{{ item.urlAdmin(item.eid) }}">
+        <div class="d-flex align-items-center">
+            <div class="thumb-b-img">
+                <i class="{{ item.icon }}"></i>
+            </div>
+            <div class="thumb-b-ctn">
+                <span class="ctn--title">{{ item.name }}</span>
+                <p>
+                    <i>{{ item.title }}</i> - {{ item.fullname }}<br>
+                    <i class="ri-time-fill"></i> {{ item.updated_at | date('d-m-Y') }}
+                </p>
+            </div>
+        </div>
+    </a>
+</div>

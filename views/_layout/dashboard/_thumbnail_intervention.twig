@@ -1,0 +1,16 @@
+<div class="thumbnail thumbnail-bloc mg-b-1">
+    <a href="{{ item.urlAdmin(item.idi) }}">
+        <div class="d-flex align-items-center">
+            <div class="thumb-b-img">
+                <i class="ri-list-check-2"></i>
+            </div>
+            <div class="thumb-b-ctn">
+                <span class="ctn--title">{{ item.ititle }}</span>
+                <p>
+                    <i>{{ item.number }}</i> - <i class="{{ item.icon }}"></i> {{ item.ename }}<br>
+                    <i class="ri-time-fill"></i> {{ item.idate | date('d-m-Y') }}
+                </p>
+            </div>
+        </div>
+    </a>
+</div>

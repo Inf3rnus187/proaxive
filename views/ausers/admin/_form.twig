@@ -1,0 +1,7 @@
+{{ form.input('mail', "Adresse email", false, '<i class="ri-information-fill"></i> Est aussi le "login" de connexion', '') | raw }}
+{{ form.input('fullname', "Nom complet", false, '', '') | raw }}
+{{ form.input('pseudo', "Pseudonyme", false, false, '') | raw }}
+{{ form.select('roles_id', 'Rang/Rôle', roles) | raw }}
+{% if inputpassword is defined %}
+{{ form.password('password', 'Mot de passe', false) | raw }}
+{% endif %}

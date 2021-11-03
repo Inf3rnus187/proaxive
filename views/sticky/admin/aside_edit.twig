@@ -1,0 +1,22 @@
+<div class="aside-stickies aside-form" id="aside-stickies" style="width:25rem;" data-popup-modal="aside-edit-modal-{{ item.id }}">
+    <div class="header-stickies">
+        Modification de la note
+        <div id="stick-button-close" class="popup-modal__close" style="float: right">
+            <a href="#" class="aside-close-stickies"><i style="font-size: 1.2em;" class="ri-close-circle-fill"></i></a>
+        </div>
+    </div>
+<div class="content-stickies">
+    <div class="form-stick-body" style="border-color:yellowgreen">
+        <form method="post" class="form-big" action="/admin/sticky/{{ item.id }}">
+        <input type="hidden" name="{{ item.id }}">
+        {{ form.inputWithVar('title', 'Titre de la note', false, false, false, item.title) | raw }}
+        {{ form.inputColorRgbaWithVar('bgcolor', 'Couleur de fond', item.bgcolor) | raw }}
+        {{ form.inputColorWithVar('txtcolor', 'Couleur du texte', item.txtcolor) | raw }}
+        {{ form.inputWithVar('content', 'Détail de la note', false, false, {'type': 'textarea'}, item.content) | raw }}
+        {{ form.checkbox('stick', 'Epingler cette note ?') | raw }}
+        <button type="submit" class="btn btn-primary" name="update"><i class="ri-checkbox-circle-line"></i> Confirmer</button>
+        <button type="submit" class="btn btn-danger" name="delete"><i class="ri-delete-bin-line"></i> Supprimer</button>
+        </form>
+    </div>
+</div>
+</div>

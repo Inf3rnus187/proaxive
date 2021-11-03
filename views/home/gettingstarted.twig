@@ -1,0 +1,19 @@
+{% extends '_layout/dashboard/layout_login.twig' %}
+
+{% block body %}
+    <div class="auth-login-header mg-b-2">
+        <div class="text-center mg-b-2">
+            <img class="img-fluid" style="width:40%;" src="{{ getenv('APP_THEME') }}/logo_proaxive.png" alt="">
+        </div>
+        <h5>Proaxive {{ app_info.number }} ({{ app_info.status }})</h5>
+        <p class="nomg">Configuration de la base de données</p>
+    </div>
+    {{ include('_notifications.twig') }}
+    <form method="post" class="form-big">
+        {{ form.input('db_host', "Serveur de base données", 'Ex : localhost, 127.0.0.1 etc.', false) | raw }}
+        {{ form.input('db_user', "Utilisateur", "Utilisateur de la base de données", "") | raw }}
+        {{ form.input('db_name', "Nom de la base de données", "Nom de votre base de données", "") | raw }}
+        {{ form.password('db_passwd', "Mot de passe", false, "") | raw }}
+        <button type="submit" class="btn btn-primary w100"><i class="ri-checkbox-circle-line"></i> Confirmer les paramètres</button>
+    </form>
+{% endblock %}

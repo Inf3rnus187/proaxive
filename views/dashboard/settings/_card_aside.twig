@@ -1,0 +1,31 @@
+<div class="card-aside card-aside-left">
+    <div class="card-inner border-bottom">
+        <h3>Configuration de l'application</h3>
+    </div>
+    <div class="card-inner nopg">
+        <ul class="link-list-menu">
+            <li>
+                <a {% if current_navitem == 'setting' %}class="active"{% endif%} href="/admin/setting">
+                    <span><i class="ri-equalizer-line"></i></span>
+                    Paramètres globaux
+                </a>
+            </li>
+            <li>
+                <a {% if current_navitem == 'mailing' %}class="active"{% endif%} href="/admin/setting/courriel">
+                    <span><i class="ri-mail-settings-fill"></i></span>
+                    Services Courriel
+                </a>
+            </li>
+            <li>
+                <a {% if current_navitem == 'database' %}class="active"{% endif%} href="/admin/setting/database">
+                    <span><i class="ri-database-2-fill"></i></span>
+                    Base de données
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="card-inner">
+        {{ viewAlert('info', "<i class=\"ri-information-fill\"></i> Pour que les courriels arrivent correctement via SMTP, veuillez configurer votre nom de domaine. Proaxive ne peux pas le faire pour vous.
+") | raw }}
+    </div>
+</div>

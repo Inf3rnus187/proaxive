@@ -1,0 +1,19 @@
+{% extends '_layout/dashboard/layout_login.twig' %}
+
+{% block body %}
+    <div class="auth-login-header mg-b-2">
+        <div class="text-center mg-b-2">
+            <img class="img-fluid" style="width:40%;" src="{{ getenv('APP_THEME') }}/logo_proaxive.png" alt="">
+        </div>
+        <h5>Panel d'administration</h5>
+        <p class="nomg">Entrez votre identifiants Proaxive</p>
+    </div>
+    {{ include('_notifications.twig') }}
+    <form method="post" class="form-big">
+        <div class="form-group">
+            <label for="mail" class="form-label">Adresse courriel</label>
+            <input type="text" name="mail" id="mail" class="form-input underlined" placeholder="Votre identifiant Proaxive">
+        </div>
+        <button type="submit" name="" class="btn btn-primary w100"><i class="ri-checkbox-circle-line"></i> Se connecter</button>
+    </form>
+{% endblock %}

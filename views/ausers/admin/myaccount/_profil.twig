@@ -1,0 +1,47 @@
+<div class="card-inner border-bottom p-relative">
+    <div class="user-card d-flex align-items-center">
+        <div class="user-avatar bg-primary rounded">
+            <span><i class="ri-user-2-fill"></i></span>
+        </div>
+        <div class="user-info">
+            <span class="d-block"><strong>{{ auser.fullname }}</strong></span>
+            {% if auser.mail is not empty %}
+                <span>{{ auser.mail }}</span>
+            {% endif %}
+
+        </div>
+    </div>
+    <div class="p-absolute" style="right:1em;top:1em;">
+        <span class="badge badge-light-info" style="font-size:1.2em;" title="{{ role.title }}">{{ roleicon(role.id) | raw }}</span>
+    </div>
+</div>
+<div class="card-inner border-bottom">
+    {% if auser.key_totp is empty %}
+        <a href="/admin/myaccount/totp" class="btn btn-primary"><i class="ri-key-2-fill"></i> Activer la double authentification</a>
+    {% elseif auser.key_totp is not empty %}
+        <span class="text-primary d-block mg-b-1">L'authentification à double facteur est activée sur votre compte.</span>
+        <button type="button" data-popup-trigger="totp_desactivate" class="btn btn-danger popup-trigger">Désactiver la double authentification</button>
+    {% endif %}
+</div>
+<div class="card-inner nopg">
+    <ul class="link-list-menu">
+        <li>
+            <a class="{% if current_navitem == 'home' %}active{% endif%}" href="/admin/myaccount">
+                <span><i class="ri-profile-fill"></i></span>
+                Mon compte
+            </a>
+        </li>
+        <li>
+            <a class="{% if current_navitem == 'edit' %}active{% endif%}" href="/admin/myaccount/edit">
+                <span><i class="ri-user-fill"></i></span>
+                Modifier mes données
+            </a>
+        </li>
+        <li>
+            <a class="{% if current_navitem == 'password' %}active{% endif%}" href="/admin/myaccount/password">
+                <span><i class="ri-key-2-fill"></i></span>
+                Mot de passe
+            </a>
+        </li>
+    </ul>
+</div>

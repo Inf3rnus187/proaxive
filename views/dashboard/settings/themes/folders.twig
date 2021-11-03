@@ -1,0 +1,40 @@
+{% extends '_layout/dashboard/layout.twig' %}
+
+{% block title %}Gestion des paramètres du site internet{% endblock %}
+
+{% block body %}
+    <!-- START .cards -->
+    <div class="section--admin">
+        <div class="container">
+            <div class="admin-content">
+                {{ include('_notifications.twig') }}
+                <form method="post">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Thème CSS <span class="text-primary">({{ theme }})</span></h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="admin-form mg-tb-3">
+                                <div class="grid-12">
+                                    {% for file in files %}
+                                        <div class="col-3_sm-12">
+                                            <div class="thumbnail mg-b-2">
+                                                <div class="thumbnail__title">
+                                                    <span class="t__name">{{ file }}</span>
+                                                </div>
+                                                <div class="thumbnail__content text-center">
+                                                    <a style="font-size: 4em" href="/admin/setting/css/{{ theme }}/{{ file | supext }}" title="Editer les fichiers CSS de ce thème"><i class="ri-css3-fill"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- END .cards -->
+{% endblock %}

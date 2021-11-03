@@ -1,0 +1,279 @@
+{% extends '_layout/dashboard/layout.twig' %}
+
+{% block title %}Intervention du {{ intervention.icreated | format_date('none', 'EEEE d MMM Y', null, 'gregorian', 'fr') }}{% endblock %}
+
+{% block stylesheets %}
+    <!-- START::SimpleMDE -->
+    <link rel="stylesheet" href="{{ getenv('APP_ROOT_PUBLIC') }}/assets/javascript/simplemde/simplemde.min.css">
+    <!-- START::Datetime -->
+    <link rel="stylesheet" href="{{ getenv('APP_ROOT_PUBLIC') }}/assets/javascript/tail-datetime/css/tail.datetime-default-green.css">
+    <!-- START Splide CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@3.0.3/dist/css/splide.min.css">
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        document.addEventListener( 'DOMContentLoaded', function () {
+            new Splide( '.splide', {
+                fixedWidth : 100,
+                height     : 60,
+                gap        : 10,
+                rewind     : true,
+                cover      : true,
+                pagination : false,
+            } ).mount();
+        } );
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@3.0.3/dist/js/splide.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+    <script>
+        [].forEach.call(document.getElementsByClassName('area-mdeditor'),element => {
+            const simplemde = new SimpleMDE({
+                element: element,
+            });
+        });
+    </script>
+    <script src="{{ getenv('APP_ROOT_PUBLIC') }}/assets/styles/proaxive/js/fslightbox.js"></script>
+{% endblock %}
+
+{% block body %}
+    <!-- start: Show intervention -->
+    <div class="admin--intervention">
+        {{ include('_notifications.twig') }}
+        {% if intervention.auser_id is null %}
+            {{ viewAlert('warning', "<i class=\"ri-alarm-warning-line\"></i> Cette intervention a été créée par technicien qui n'existe plus en base de données !") | raw }}
+        {% endif %}
+        <div class="ad--title">
+            <h1><i class="ri-arrow-right-circle-line"></i> Intervention du {{ intervention.created_at | format_date('none', 'EEEE d MMM Y à H:m', null, 'gregorian', 'fr') }}</h1>
+        </div>
+        {% if intervention.closed == 1 %}
+            <div class="alert alert-success" role="alert"><span><i class="ri-check-line"></i></span>Cette intervention a été cloturée le <strong>{{ intervention.close_date | format_date('none', 'EEEE d MMM Y à H:m', null, 'gregorian', 'fr') }}</strong></div>
+        {% endif %}
+        {% if intervention.cancel_inter is not null %}
+            <div class="alert alert-danger" role="alert"><span><i class="ri-stop-circle-fill"></i></span>Cette intervention a été annulée le <strong>{{ intervention.cancel_inter | format_date('none', 'EEEE d MMM Y à H:m', null, 'gregorian', 'fr') }}</strong></div>
+        {% endif %}
+        <form method="post" class="form-big" enctype="multipart/form-data">
+            <div class="grid-12">
+                <div class="col-9_sm-12">
+                    <div class="card mg-b-2">
+                        <div class="card-body">
+                            <div class="d-flex d-block-mobile">
+                                <div class="inter--img">
+                                    {% if intervention.i_photo is empty %}
+                                        <a data-popup-trigger="add-photos-principal" class="popup-trigger" href="#" title="Charger une photo principale"><img class="rounded-circle mg-r-2" style="height:120px;" src="{{ getenv('APP_THEME') }}/No-image-available.png" alt=""></a>
+                                    {% else %}
+                                        <a data-popup-trigger="add-photos-principal" class="popup-trigger" href="#" title="Remplacer la photo existante"><img class="rounded-circle mg-r-2" style="height:120px;" src="{{ getenv('APP_ROOT_PUBLIC') }}/uploads/intervention/{{ intervention.id }}/{{ intervention.i_photo }}" alt=""></a>
+                                    {% endif %}
+                                </div>
+                                <div class="inter--infos w100">
+                                    <div class="d-flex justify-content-space-between">
+                                        <div class="inter-title_client">
+                                            <h4>
+                                                <a href="#" title="{{ intervention.last_view | format_date('none', 'd MMM Y à H:m', null, 'gregorian', 'fr') }}">
+                                                    <span class="label badge-light-info"><i class="ri-eye-fill"></i> {{ intervention.nb_views }} Vue(s)</span>
+                                                </a>
+                                                <span class="label badge-light-info">#{{ intervention.number }}</span> {{ intervention.title }}
+                                            </h4>
+                                            <div class="infosbar-client">
+                                                <span class="d-block-mobile"><i class="ri-profile-fill"></i> {{ client.fullname }} {% if society.s_name is not empty %}({{ society.s_name }}){% endif %}</span>
+                                                <span class="d-block-mobile"><i class="ri-mail-fill"></i> {{ client.mail }}</span>
+                                                <span class="d-block-mobile"><i class="ri-phone-fill"></i> {{ client.phone }}</span>
+                                                <span class="d-block-mobile"><i class="ri-building-fill"></i> {{ client.city }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="inter--link justify-content-end">
+                                            {% if intervention.start is null %}
+                                                <button class="btn-sm badge-light-success animate__animated animate__flash" name="start_inter"><i class="ri-rocket-fill"></i> Débuter l'intervention</button>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-space-between align-items-center mg-t-1 d-block-mobile">
+                                        <div class="inter--description">
+                                            {{ intervention.description }}
+                                        </div>
+                                        <div class="inter--date">
+                                            <div class="d-flex">
+                                                <div style="margin-right:1.5em;">
+                                                    {% if intervention.start is not null %}
+                                                        <span class="d-block" style="margin-bottom:0.5em;font-weight: 500">Débutée le</span>
+                                                        <span class="label badge-light-info text-uppercase" style="padding:0.8em 1em;">{{ intervention.start | format_date('none', 'd MMM Y', null, 'gregorian', 'fr') }}</span>
+                                                    {% endif %}
+                                                </div>
+                                                <div>
+                                                    {% if intervention.close_date is not null %}
+                                                        <span class="d-block" style="margin-bottom:0.5em;font-weight: 500">Terminée le</span>
+                                                        <span class="label badge-light-danger text-uppercase" style="padding:0.8em 1em;">{{ intervention.close_date | format_date('none', 'd MMM Y', null, 'gregorian', 'fr') }}</span>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="inter-progress"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="equipment-details">
+                                <div class="grid-12">
+                                    <div class="col-2_sm-12">
+                                        <span class="title d-block">Type d'intervention</span>
+                                        {{ interType(intervention.inter_type) | raw }}
+                                    </div>
+                                    <div class="col-2_sm-12">
+                                        <span class="title d-block">Equipement</span>
+                                        <button type="button" data-popup-trigger="equipment-{{ equipment.id }}" class="btn-sm btn-light-info popup-trigger"><i class="icofont-delete"></i> {{ equipment.name }}</button> ({{ brand.b_title }})
+                                    </div>
+                                    <div class="col-2_sm-12">
+                                        {% if intervention.pmad == 0 %}
+                                            <span class="title d-block">Date de dépôt</span>  {{ intervention.received | format_date('none', 'EEEE d MMM Y', null, 'gregorian', 'fr') }}
+                                        {% elseif intervention.pmad == 1 %}
+                                            <span class="title d-block">Type</span> Prise de main à distance
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-2_sm-12">
+                                        <span class="title d-block">Lien vers l'intervention</span>
+                                        <a href="{{ app_setting.app_url }}/i/{{ intervention.number_link }}" target="_blank">Cliquez ici</a>
+                                    </div>
+                                    <div class="col-2_sm-12">
+                                    </div>
+                                    <div class="col-2_sm-12"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% if intervention.closed == 1 %}
+                        <!-- Close details -->
+                        <div class="card card--border border-primary mg-b-2">
+                            <div class="card-body">
+                                <h3 class="title-card primary whitetxt"><i class="ri-sticky-note-fill"></i> Compte rendu</h3>
+                                <p>{{ intervention.report }}</p>
+
+                            </div>
+                        </div>
+                    {% endif %}
+                    <!-- Form intervention -->
+                    <div class="grid-12">
+                        <div class="col-12_sm-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="grid-12 -noGutter">
+                                        <div class="col-6_sm-12">
+                                            <h5>Modification de cette intervention</h5>
+                                            <span class="d-block">Apporter des modifications pour cette intervention</span>
+                                        </div>
+                                        <div class="col-6_sm-12 text-right">
+                                            {{ form.submitSingle('primary', 'update', 'Enregistrer', 'save-fill') | raw }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-tabs">
+                                    <ul id="tabs">
+                                        <li><a href="#edit_details"><i class="ri-information-fill"></i> Informations de l'intervention</a></li>
+                                        <li><a href="#edit_content"><i class="ri-tools-fill"></i> Détails et observations</a></li>
+                                        <li><a href="#edit_note"><i class="ri-sticky-note-fill"></i> Note Technicien (admin)</a></li>
+                                        <li><a href="#gallery"><i class="ri-image-fill"></i> Galerie photos/captures</a></li>
+                                    </ul>
+                                    <div class="tabs-pe pg2">
+                                        <div class="tabContent" id="edit_details">
+                                            <div class="grid-12">
+                                                <div class="col-6_sm-12">
+                                                    {% if sessionAuth.roles_id == 1 %}
+                                                    {{ form.select('auser_id', 'Technicien', ausers) | raw }}
+                                                    {% else%}
+                                                        <div class="form-group">
+                                                            <label class="form-label" for="title">Technicien</label>
+                                                            <span class="disabled d-block">{{ technician.fullname }}</span>
+                                                        </div>
+                                                    {% endif %}
+                                                    {{ form.input('title', "Titre de l'intervention", "Le nom que porte votre intervention") | raw }}
+                                                    {{ form.textareaDefault('description', "Description de la panne", "Décrire le problème rencontré") | raw }}
+                                                </div>
+                                                <div class="col-6_sm-12">
+                                                    {{ form.checkbox('pmad', 'A distance (PMAD) ?') | raw }}
+                                                    {{ form.select('inter_type', "Type d'intervention", {1 : 'Dépannage', 2 : 'Visite Périodique', 3 : 'Préparation de poste', 4 : 'Assemblage'}) | raw }}
+                                                    {{ form.select('status_id', 'Status', status) | raw }}
+                                                    {% if intervention.steps is not null %}
+                                                    {{ form.select('steps', 'Steps', {1: 'Matériel récupéré', 2: 'En atelier', 3: 'Tests finaux', 4: 'Terminé'}) | raw }}
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            <div class="separator separator-dashed mg-tb-2"></div>
+                                            Vous pouvez supprimer cette intervention, action irréversible.
+                                            <p class="mg-t-1">
+                                                <button type="button" data-popup-trigger="delete-modal-{{ intervention.id }}" class="btn-sm btn-light-danger popup-trigger">Supprimer cette intervention</button>
+                                            </p>
+                                        </div>
+                                        <div class="tabContent" id="edit_content">
+                                            <div class="grid-12">
+                                                <div class="col-6_sm-12">
+                                                    {{ form.textareaMde('details', "Décrivez les actions en temps réel", "Détails de l'intervention", 'Un - plus retour à la ligne pour chaque action') | raw }}
+                                                </div>
+                                                <div class="col-6_sm-12">
+                                                    {{ form.textareaMde('observation', "Note d'observation à l'attention du client", "Note supplémentaire suite à l'intervention") | raw }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tabContent" id="edit_note">
+                                            {{ form.textareaMde('note_tech', "Note pour le technicien", "Note supplémentaire visible que par le technicien") | raw }}
+                                        </div>
+                                        <div class="tabContent" id="gallery">
+                                            <div class="upload-container">
+                                                <a data-popup-trigger="add-photos-gallery" class="popup-trigger" href="#">
+                                                    <span>
+                                                        <i class="ri-image-add-line"></i>
+                                                        Cliquez ici pour importer des photos ou des captures d'écran
+                                                    </span>
+                                                </a>
+                                            </div>
+                                            <div class="i_gallery">
+                                                <div class="splide">
+                                                    <div class="splide__track">
+                                                        <ul class="splide__list">
+                                                            {% for photo in photos %}
+                                                                <li class="splide__slide">
+                                                                    <a data-fslightbox="gallery" href="/public/uploads/intervention/{{ intervention.id }}/gallery/{{ photo }}">
+                                                                    <img class="img-responsive" src="{{ getenv('APP_ROOT_PUBLIC') }}/uploads/intervention/{{ intervention.id }}/gallery/{{ photo }}" alt="">
+                                                                    </a>
+                                                                </li>
+                                                            {% endfor %}
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3_sm-12">
+                    <!-- update date/time -->
+                    <div class="card card--border border-primary">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-space-between">
+                                <div>
+                                    <h3 style="font-weight: 500;">Etat de l'intervention</h3>
+                                    <span>
+                                    <i class="ri-time-fill"></i> {{ intervention.updated_at | format_date('none', 'EEEE d MMM Y', null, 'gregorian', 'fr') }}
+                                </span>
+                                </div>
+                                <div>{{ labelCustom(statusFind.bgcolor, statusFind.txtcolor, statusFind.title) | raw }}</div>
+                            </div>
+                            <div class="mg-t-2">
+                                {{ include('/intervention/admin/_button.twig') }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- start: modals -->
+            {{ include('/intervention/admin/_modal.twig') }}
+            <!-- end: modals -->
+        </form>
+    </div>
+    <!-- end: Show intervention -->
+    <!-- start: modal delete -->
+    <form method="post" action="/admin/intervention/delete">
+    {{ include('/dashboard/_modal-delete.twig', {'id': intervention.id, 'title': intervention.title }) }}
+    <!-- end: modal delete -->
+    </form>
+{% endblock %}

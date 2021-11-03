@@ -1,0 +1,15 @@
+<div class="post-it-hover"><span><i class="ri-edit-2-line"></i></span></div>
+<div class="post-it-note" style="background-color:{{ item.bgcolor }};color:{{ item.txtcolor }}">
+    {% if item.stick == 1 %}
+        <span class="stick badge-white"><i class="ri-pushpin-line"></i></span>
+    {% endif %}
+    <div class="post-it-header">
+        {{ item.title }}
+    </div>
+    <div class="post-it-content">
+        {{ item.content | slice(0,120) }}
+    </div>
+    <div class="post-it-footer">
+        {{ item.created_at | date('d/m/Y') }}
+    </div>
+</div>

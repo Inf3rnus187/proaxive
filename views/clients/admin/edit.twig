@@ -1,0 +1,63 @@
+{% extends '_layout/dashboard/layout.twig' %}
+
+{% block title %}Modifier un client - {{ client.fullname }}{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" integrity="sha512-aOG0c6nPNzGk+5zjwyJaoRUgCdOrfSDhmMID2u4+OIslr0GjpLKo7Xm0Ao3xmpM4T8AmIouRkqwj1nrdVsLKEQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.min.css" integrity="sha512-okE4owXD0kfXzgVXBzCDIiSSlpXn3tJbNodngsTnIYPJWjuYhtJ+qMoc0+WUwLHeOwns0wm57Ka903FqQKM1sA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        /** Date Hidden Intervention **/
+        function toggleFields(boxId, checkboxId) {
+            var checkbox = document.getElementById(checkboxId);
+            var box = document.querySelector(".check_display");
+            var sel = document.querySelector(".form-select");
+            checkbox.onclick = function() {
+                if (this.checked) {
+                    box.style.display = "block";
+                    sel.removeAttribute("disabled");
+                } else {
+                    box.style.display = "none";
+                    sel.setAttribute("disabled", "disabled");
+
+                }
+            };
+        }
+        toggleFields('b_society', 'w_society');
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="{{ getenv('APP_THEME') }}/js/opendata.js"></script>
+{% endblock %}
+
+{% block body %}
+    <div class="grid">
+        <div class="col-12_sm-12_lg-12">
+            <form method="post" class="form-big">
+                <div class="card">
+                    <div class="card-column d-flex">
+                        {{ include('clients/admin/_aside_profil.twig') }}
+                        <div class="card-inner fg-1">
+                            <!-- Equipements -->
+                            <div class="card-inner-bloc">
+                                <div class="cib--header">
+                                    <h4>Informations personnelles</h4>
+                                    <span class="d-block">Modifier les informations du client</span>
+                                </div>
+                                <div class="cib--content">
+                                    {{ include('/clients/admin/_form.twig') }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <form method="post" action="/admin/client/delete">
+        <input type="hidden" value="{{ client.id }}" name="id">
+        {{ include('dashboard/_modal-delete.twig', {id:client.id , title:client.fullname, 'note': 'Cela supprimera toutes ses données'}) }}
+    </form>
+{% endblock %}

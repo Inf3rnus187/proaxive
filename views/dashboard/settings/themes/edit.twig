@@ -1,0 +1,73 @@
+{% extends '_layout/dashboard/layout.twig' %}
+
+{% block title %}Gestion des paramètres du site internet{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.3/codemirror.min.css">
+    {% if app_setting.fixed_dark == 1 %}
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.3/theme/rubyblue.min.css" type="text/css"/>
+    {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.3/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.3/mode/css/css.min.js"></script>
+<script>
+   var editor = CodeMirror.fromTextArea(document.getElementById("codecss"), {
+      lineNumbers: true,
+      mode: "text/css",
+      theme: "rubyblue default",
+      matchBrackets: true,
+    });
+</script>
+<script src="https://unpkg.com/vanilla-picker@2"></script>
+<script>
+    // Create a new Picker instance and set the parent element.
+    // By default, the color picker is a popup which appears when you click the parent.
+    var parent = document.querySelector('#parent');
+    var picker = new Picker(parent);
+    // You can do what you want with the chosen color using two callbacks: onChange and onDone.
+    picker.onChange = function(color) {
+        parent.style.background = color.rgbaString;
+    };
+    // onDone is similar to onChange, but only called when you click 'Ok'.
+</script>
+{% endblock %}
+
+{% block body %}
+    <!-- START .cards -->
+    <div class="section--admin">
+        <div class="container">
+            <div class="admin-content">
+                {{ include('_notifications.twig') }}
+                <div id="parent">
+                    <span class="badge badge-info mg-b-1">
+                        <i class="ri-paint-line"></i> Cliquez ici pour ouvrir le générateur de couleur
+                    </span>
+                </div>
+                <form method="post">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="grid-12 -noGutter">
+                                <div class="col-6_sm-12">
+                                    <h4>Thème CSS <span class="text-primary">({{ theme }}/{{ cssName }}.css)</span></h4>
+                                    <span>Éditeur de style CSS en ligne</span>
+                                </div>
+                                <div class="col-6_sm-12 text-right">
+                                        {{ form.submitDefault('Sauvegarder', 'primary') | raw }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="admin-form">
+                                <label for="codecss" class="d-none">Editeur CSS</label>
+                                <textarea class="codemirror-int mg-b-3" id="codecss" name="stylesheets">{{ css }}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- END .cards -->
+{% endblock %}
