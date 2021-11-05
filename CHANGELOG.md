@@ -1,3 +1,9 @@
+#### Proaxive 1.6.0-beta7
+
+```
+La date de retrait peut être ajoutée manuellement
+```
+
 #### Proaxive 1.6.0-beta6
 
 ```

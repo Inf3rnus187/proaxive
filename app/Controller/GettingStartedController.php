@@ -32,7 +32,7 @@ class GettingStartedController extends AppController
         // Charge le fichier Json
         $viewJsonFile = @file_get_contents(ROOT. 'config/db.json');
         $viewJson = json_decode($viewJsonFile, false);
-        if($viewJson->first_install == 0){
+        if($viewJson->first_install == 0 || empty($viewJson->db_host)){
             header('Location: /');
             exit();
         }

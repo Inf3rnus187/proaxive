@@ -134,3 +134,25 @@
     </div>
 </div>
 <!--/modal-->
+
+<!-- Modal Add photos gallery -->
+<div class="popup-modal shadow" data-popup-modal="date-back-home">
+    <i class="ri-close-line popup-modal__close bg-danger rounded" aria-hidden="true"></i>
+    <div class="popup-modal-header">
+        <h1 class="font-weight-bold">
+            Date de retrait
+        </h1>
+    </div>
+    <div class="popup-modal-body">
+        <div class="form-group">
+            {{ form.tailDatetimeWithValue('back_home', 'Date de retrait', "now"|date("m/d/Y") ,false) | raw }}
+        </div>
+    </div>
+    <div class="popup-modal-footer">
+        <div class="form-group">
+            <button type="submit" name="backhome" class="btn btn-primary"><i class="ri-check-fill"></i> Confirmer</button>
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>
+<!--/modal-->

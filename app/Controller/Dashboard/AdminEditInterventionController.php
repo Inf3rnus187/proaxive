@@ -183,7 +183,7 @@ class AdminEditInterventionController extends AppController
                 $result = $this->Intervention->update(
                     'id', (int) $id,
                     [
-                        'back_home' => $this->newDate
+                        'back_home' => $_POST['back_home']
                     ]);
                 // Met à jour le champs "inworkshop" de l'équipement
                 $updateEquipment = $this->Equipment->update(

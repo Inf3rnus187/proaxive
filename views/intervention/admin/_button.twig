@@ -7,7 +7,7 @@
 <a href="/admin/intervention/pdf/{{ intervention.id }}" title="Fiche d'intervention PDF" class="btn btn-info" target="_blank"><i class="icofont-file-pdf"></i> PDF</a>
 -->
 {% if intervention.back_home is null %}
-{{ form.submitSingle('warning d-block w100', 'backhome', 'Rendre le matériel', 'truck-fill') | raw }}
+<button type="button" data-popup-trigger="date-back-home" class="btn btn-warning d-block w100 popup-trigger"><i class="ri-truck-fill"></i> Rendre le matériel</button>
 {% else %}
 <span class="btn btn-primary d-block"><i class="ri-check-fill"></i> Rendu le {{ intervention.back_home | date('d-m-y') }}</span><br>
 {% endif %}
