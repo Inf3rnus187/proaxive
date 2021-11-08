@@ -1,5 +1,5 @@
 # PROAXIVE (1.6.x)
-### version 1.6.0-beta.6
+### version 1.6.0-beta7
 
 [![Minimum PHP Version](https://img.shields.io/badge/PHP->=7.4-%23786fa6)](https://php.net/)
 [![Minimum MySQL Version](https://img.shields.io/badge/MySQL-5.x-%23f0932b)](https://www.mysql.com/fr/)
@@ -15,6 +15,7 @@ Elle permet de gérer les interventions informatique en ligne. L'application web
 - MySQL 5.x
 - Apache or Nginx
 - Composer (SSH)
+- Git (pas obligatoire)
 
 #### Extensions PHP requises
 - php-intl
@@ -35,7 +36,7 @@ OpenStreetMap : https://www.openstreetmap.fr/
 ## Installation
     
 ```shell
-composer create-project selmak-fr/proaxive
+composer create-project -s dev selmak-fr/proaxive .
 ```
 01. Via votre terminal, éditez le fichier phinx.yml (à la racine de l'application) de Proaxive et renseignez les informations de votre base de données (section "development").
 
