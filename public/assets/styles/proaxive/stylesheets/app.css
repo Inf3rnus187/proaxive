@@ -1131,7 +1131,7 @@ strong {
 
 /* line 374, ../sass/_base.scss */
 .CodeMirror {
-  height: 600px !important;
+  /*height: 600px !important;*/
 }
 
 /* line 1, ../sass/_label.scss */

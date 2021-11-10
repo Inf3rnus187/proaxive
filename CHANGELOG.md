@@ -1,3 +1,10 @@
+#### Proaxive 1.6.0-beta8
+
+```
+Suppression d'un textarea en trop dans le formulaire d'équipement
+Correction CSS du textarea Markdown
+```
+
 #### Proaxive 1.6.0-beta7
 
 ```
