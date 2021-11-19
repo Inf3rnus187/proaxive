@@ -1,3 +1,17 @@
+#### Proaxive 1.6.0-beta9
+
+Mise à jour de la base de données via (être connecté en admin) :
+
+https://mon-url.org/database-update
+
+```
+Correction du menu (current_menu)
+Corrections de quelques textes par défaut
+Ajout d'une image principale par défaut (intervention)
+Ajout d'un champs de recherche pour les interventions et les clients
+Correction dans l'ajout de Société
+```
+
 #### Proaxive 1.6.0-beta8
 
 ```

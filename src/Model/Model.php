@@ -200,6 +200,20 @@ class Model{
         return $return;
     }
 
+    /**
+     * Recherche Ajax
+     * @param $key
+     * @param $word
+     * @return mixed
+     */
+    public function searchAjax($key, $word){
+        return $this->query("
+            SELECT *
+            FROM " .$this->model . "
+            WHERE $key
+            LIKE ? ORDER BY $key DESC", ["%".$word."%"]);
+    }
+
 
     /**
      * Permet de supprimer une ligne d'une table SQL

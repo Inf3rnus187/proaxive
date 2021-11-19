@@ -1,0 +1,13 @@
+<div class="mg-t-1" style="padding:1em;">
+    <h4 class="mg-b-1"><strong>Résultat de la recherche :</strong></h4>
+    <div class="grid-12">
+        {% for intervention in interventions %}
+            <div class="col-3_sm-12">
+                <a href="{{ intervention.UrlAdmin }}" class="item-search">
+                    <strong>{{ intervention.title }}</strong>
+                    <p class="mg0">{{ intervention.description }}<br>Créé le <i>{{ intervention.created_at | format_date('none', 'EEEE d MMM Y à H:m', null, 'gregorian', 'fr') }}</i></p>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</div>

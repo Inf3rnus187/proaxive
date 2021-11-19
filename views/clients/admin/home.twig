@@ -2,30 +2,41 @@
 
 {% block title %}Les clients{% endblock %}
 
+{% block javascripts %}
+    <script src="{{ getenv('APP_THEME') }}/js/search.js"></script>
+{% endblock %}
+
 {% block body %}
     <div class="container--admin">
         <div class="container">
             <div class="admin-content">
                 {{ include('_notifications.twig') }}
                 <div class="card">
-                    <div class="card-header d-flex justify-content-between">
-                        <div>
-                            <h4 class="card-title">Gestion des clients</h4>
-                        </div>
-                        <div>
-                            {% if clients is not empty %}
-                                <form method="post" action="/admin/clients/export">
-                                    <input type="hidden" name="export_data">
-                                    <button type="submit" class="btn-sm btn-primary"> <i class="icofont-download-alt"></i> Exporter les clients</button>
-                                </form>
-                            {% endif %}
+                    <div class="card-header">
+                        <div class="grid-12 -noGutter">
+                            <div class="col-8_sm-12">
+                                <div class="form-group nomg">
+                                    <label class="form-label" for="txtHint" style="display:none">Rechercher</label>
+                                    <input type="text" autocomplete="off" onkeyup="searchClient(this.value)" class="form-input underlined" id="txtHint" placeholder="Rechercher un client">
+                                </div>
+                            </div>
+                            <div class="col-4_sm-12 text-right">
+
+                                {% if clients is not empty %}
+                                    <form class="d-inline-block" method="post" action="/admin/clients/export">
+                                        <input type="hidden" name="export_data">
+                                        <button type="submit" class="btn-sm btn-primary"> <i class="icofont-download-alt"></i> Exporter les clients</button>
+                                    </form>
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
+                    <div class="results" id="txtName"></div>
                     <div class="card-table">
                         {% if clients is empty %}
                         {{ viewAlert('info',"Il n'y a aucun client d'enregistré pour le moment") | raw }}
                         {% else %}
-                            <table id="data-table" class="table-default">
+                            <table class="table-default">
                                 <thead>
                                 <tr>
                                     <th>Nom</th>

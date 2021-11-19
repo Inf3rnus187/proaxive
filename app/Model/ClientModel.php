@@ -89,6 +89,21 @@ class ClientModel extends Model {
     }
 
     /**
+     * Recherche un client
+     * @param string $word
+     * @return mixed
+     */
+
+    public function search(string $word)
+    {
+        return $this->query("
+            SELECT *
+            FROM " .$this->model . "
+            WHERE fullname
+            LIKE ? ORDER BY fullname DESC", ["%".$word."%"]);
+    }
+
+    /**
      * Permet de récupérer tous les équipements
      *
      * @return mixed
@@ -112,6 +127,15 @@ class ClientModel extends Model {
 
       return $this->query("SELECT id FROM " . $this->model . " WHERE mail = ? AND activated IS NOT NULL", [$name], true);
 
+    }
+
+    /**
+     * @return int
+     */
+    public function countClient(){
+        $rows = $this->query('SELECT id FROM '. $this->model);
+        $total = count($rows);
+        return $total;
     }
 
     /**

@@ -2,17 +2,34 @@
 
 {% block title %}Interventions{% endblock %}
 
+{% block javascripts %}
+    <script src="{{ getenv('APP_THEME') }}/js/search.js"></script>
+{% endblock %}
+
 {% block body %}
     <div class="container">
         <div class="admin-content">
             {{ include('_notifications.twig') }}
             <div class="card">
-                <div class="card-header"><h4 class="card-title">Liste des interventions</h4></div>
+                <div class="card-header">
+                    <div class="grid-12 -noGutter">
+                        <div class="col-8_sm-12">
+                            <h4 class="card-title">Liste des interventions</h4>
+                        </div>
+                        <div class="col-4_sm-12 text-right">
+                            <div class="form-group nomg">
+                                <label class="form-label" for="txtHint" style="display:none">Rechercher</label>
+                                <input type="text" autocomplete="off" onkeyup="searchIntervention(this.value)" class="form-input underlined" id="txtHint" placeholder="Rechercher une intervention par sa référence">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="results" id="txtName"></div>
                 <div class="card-table">
                     {% if interventions is empty %}
                         {{ viewAlert('info',"Il n'y a aucune intervention d'enregistrée pour le moment") | raw }}
                     {% else %}
-                        <table id="data-table" class="table-default">
+                        <table class="table-default">
                             <thead>
                             <tr>
                                 <th>Etat</th>

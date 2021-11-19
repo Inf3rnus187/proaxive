@@ -50,6 +50,7 @@ class CreateSocietyModel extends AbstractMigration
             ->addColumn('postal_code', 'string', ['null' => true])
             ->addColumn('city', 'string', ['null' => true])
             ->addColumn('country', 'string', ['null' => true])
+            ->addColumn('department', 'string', ['null' => true])
             ->addColumn('phone', 'string', ['null' => true])
             ->addColumn('phone_2', 'string', ['null' => true])
             ->addColumn('website', 'string', ['null' => true])

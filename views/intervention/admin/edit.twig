@@ -60,7 +60,7 @@
                             <div class="d-flex d-block-mobile">
                                 <div class="inter--img">
                                     {% if intervention.i_photo is empty %}
-                                        <a data-popup-trigger="add-photos-principal" class="popup-trigger" href="#" title="Charger une photo principale"><img class="rounded-circle mg-r-2" style="height:120px;" src="{{ getenv('APP_THEME') }}/No-image-available.png" alt=""></a>
+                                        <a data-popup-trigger="add-photos-principal" class="popup-trigger" href="#" title="Charger une photo principale"><img class="rounded-circle mg-r-2" style="height:120px;" src="{{ getenv('APP_THEME') }}/no-image-available.png" alt=""></a>
                                     {% else %}
                                         <a data-popup-trigger="add-photos-principal" class="popup-trigger" href="#" title="Remplacer la photo existante"><img class="rounded-circle mg-r-2" style="height:120px;" src="{{ getenv('APP_ROOT_PUBLIC') }}/uploads/intervention/{{ intervention.id }}/{{ intervention.i_photo }}" alt=""></a>
                                     {% endif %}

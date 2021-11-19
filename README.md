@@ -1,5 +1,5 @@
 # PROAXIVE (1.6.x)
-### version 1.6.0-beta8
+### version 1.6.0-beta9
 
 [![Minimum PHP Version](https://img.shields.io/badge/PHP->=7.4-%23786fa6)](https://php.net/)
 [![Minimum MySQL Version](https://img.shields.io/badge/MySQL-5.x-%23f0932b)](https://www.mysql.com/fr/)
@@ -8,14 +8,19 @@
 Proaxive est une application web dédiée aux techniciens informatique
 Elle permet de gérer les interventions informatique en ligne. L'application web Proaxive a pour but de simplifier le suivi en atelier. Vos clients peuvent suivre ce qu'il se passe sur leur PC en temps réel.
 
-![ScreenShot](https://proaxive.fr/uploads/img/Proaxive_1-6-0-1.jpg)
+Site Internet : https://www.proaxive.fr  
+Documentations : https://www.proaxive.fr/docs  
+Discord : https://discord.gg/te6rh7DH4R  
+Forums/Support : https://discuss.synexolabs.com
+
+![ScreenShot](https://files.proaxive.fr/img/proaxive_16x.jpeg)
 
 #### Requis
 - PHP >7.4
 - MySQL 5.x
 - Apache or Nginx
 - Composer (SSH)
-- Git (pas obligatoire)
+- Git
 
 #### Extensions PHP requises
 - php-intl
@@ -32,6 +37,18 @@ API Adresse : https://adresse.data.gouv.fr/api-doc/adresse
 **La carte utilisée dans les fiches clientes** :
 
 OpenStreetMap : https://www.openstreetmap.fr/
+
+**[BAO] Boîte à Outils (par Bastien Rouches)**
+
+https://github.com/PaysanBarbare/BAO
+
+## Mise à jour beta8 -> beta9
+
+Connectez vous en administrateur puis lancez la mise à jour de la base de données :
+
+https://mon-url.org/database-update
+
+Cliquez sur "_Mettre à jour la base de données_"
 
 ## Installation
     

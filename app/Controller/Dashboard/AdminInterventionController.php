@@ -209,11 +209,20 @@ class AdminInterventionController extends AppController{
     }
 
     /**
+     * Recherche des interventions (Ajax)
+     * @param $key
+     */
+    public function search($key){
+        $interventions = $this->Intervention->searchAjax('number', $key);
+        $this->render('intervention/admin/search.twig', [
+            'current_menu' => $this->current_menu,
+            'interventions' => $interventions,
+            'breadcrumbs' => $this->breadcrumbs
+        ]);
+    }
+
+    /**
      * Permet de supprimer une intervention
-     *
-     * @throws \Twig_Error_Loader
-     * @throws \Twig_Error_Runtime
-     * @throws \Twig_Error_Syntax
      */
     public function delete(){
         App::getAuth()->isAdminOnly();

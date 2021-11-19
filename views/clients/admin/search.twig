@@ -1,0 +1,13 @@
+<div class="mg-t-1" style="padding:1em;">
+    <h4 class="mg-b-1"><strong>Résultat de la recherche :</strong></h4>
+    <div class="grid-12">
+        {% for client in clients %}
+            <div class="col-3_sm-12">
+                <a href="{{ client.UrlAdmin }}" class="item-search">
+                    <strong>{{ client.fullname }}</strong>
+                    <p class="mg0">{{ client.city }}<br><i>{{ client.department }}</i><br>{{ client.mail }}</p>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</div>

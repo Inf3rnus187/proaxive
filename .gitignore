@@ -1,3 +1,6 @@
 /.idea
 /vendor
 /composer.lock
+/config/db.json
+/config/setting.json
+/config/mail.json

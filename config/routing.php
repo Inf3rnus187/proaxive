@@ -58,6 +58,7 @@ $router->post('/admin/client/:id_client/add-intervention', "Dashboard#AdminAddIn
 $router->post('/admin/client/:id_client/equipment/:id_equipment/add-intervention', "Dashboard#AdminAddIntervention#addWithClientAndEquipment")->with('id_client', '[0-9]+')->with('id_equipment', '[0-9]+');
 $router->get('/admin/client/:id_client/equipment/:id_equipment/add-intervention', "Dashboard#AdminAddIntervention#addWithClientAndEquipment")->with('id_client', '[0-9]+')->with('id_equipment', '[0-9]+');
 $router->post('/admin/intervention/delete', "Dashboard#AdminIntervention#delete");
+$router->get('/admin/intervention/search/:key', "Dashboard#AdminIntervention#search")->with('key', '[a-z\-0-9]+');
 // Outlay
 $router->get('/admin/outlay', 'Dashboard#AdminOutlay#home');
 $router->post('/admin/outlay/export', "Dashboard#AdminOutlay#exportOutlay");
@@ -84,6 +85,7 @@ $router->post('/admin/equipment/:id/bao', "Dashboard#AdminEquipment#addBao")->wi
 $router->get('/admin/equipment/:id/bao', "Dashboard#AdminEquipment#addBao")->with('id', '[0-9]+');
 $router->get('/admin/equipment/:id/bao/view', "Dashboard#AdminEquipment#viewCurrentBao")->with('id', '[0-9]+');
 $router->get('/admin/equipment/:id/bao/:filename', 'Dashboard#AdminEquipment#viewRapportBao')->with('id', '[0-9]+')->with('filename', '[a-z\-0-9]+');
+$router->get('/admin/equipment/search/:key', "Dashboard#AdminEquipment#search")->with('key', '[a-z\-0-9]+');
 // Equipments categories
 $router->get('/admin/equipments/categories', "Dashboard#AdminCategoriesEquipment#home");
 $router->post('/admin/equipments/categories', "Dashboard#AdminCategoriesEquipment#home");
@@ -128,6 +130,7 @@ $router->post('/admin/client/:id/edit', "Dashboard#AdminClient#edit")->with('id'
 $router->get('/admin/client/:id', "Dashboard#AdminClient#view")->with('id', '[0-9]+');
 $router->get('/admin/cities/search/:key', "Dashboard#AdminClient#searchCities")->with('key', '[a-z\-0-9]+');
 $router->post('/admin/client/delete', "Dashboard#AdminClient#delete");
+$router->get('/admin/client/search/:key', "Dashboard#AdminClient#search")->with('id', '[a-z\-0-9]+');
 // Society
 $router->get('/admin/society', "Dashboard#AdminSociety#home");
 $router->post('/admin/society/export', "Dashboard#AdminSociety#exportSociety");
@@ -180,7 +183,7 @@ $router->post('/admin/sticky/:id', "Dashboard#AdminSticky#edit")->with('id', '[0
 $router->post('/admin/sticky/delete', "Dashboard#AdminSticky#delete");
 $router->post('/admin/sticky/all-delete', "Dashboard#AdminSticky#deleteAll");
 // Update App
-$router->get('/database-update', 'ProaxiveUpdate#updateByFiles');
-$router->post('/database-update', 'ProaxiveUpdate#updateByFiles');
+$router->get('/database-update', 'ProaxiveUpdate#updateDatabase');
+$router->post('/database-update', 'ProaxiveUpdate#updateDatabase');
 $router->post('/database-save', 'ProaxiveUpdate#mysqldumpData');
 $router->run();

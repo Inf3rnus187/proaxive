@@ -11,6 +11,7 @@ use Creitive\Breadcrumbs\Breadcrumbs;
 use src\Auth\Auth;
 use src\Form\SpectreForm;
 use src\MyClass\CSV;
+use src\MyClass\Paginator;
 use src\MyClass\Session;
 use \App; // Permet de récupérer l'instance de la base de données (App::getInstance()
 
@@ -57,7 +58,12 @@ class AdminClientController extends AppController{
      * @throws \Twig\Error\SyntaxError
      */
 	public function home(){
-		$clients = $this->Client->all();
+		//$clients = $this->Client->all();
+
+        $paginator = new Paginator('15', 'p');
+        $paginator->set_total($this->Client->countClient());
+        $clients = $this->Client->all($paginator->get_limit());
+        $dataPaginator = $paginator->page_links();
 
         //Breadcrumb
         $this->breadcrumbs->addCrumb('Accueil', '/admin')
@@ -69,6 +75,7 @@ class AdminClientController extends AppController{
 		    'clients' => $clients,
             'form' => $form,
             'breadcrumbs' => $this->breadcrumbs,
+            'dataPaginator' => $dataPaginator,
             'current_menu' => $this->current_menu
         ]);
 
@@ -277,7 +284,19 @@ class AdminClientController extends AppController{
     }
 
     /**
-     * Permet de rechercher une intervention par son numéro
+     * Permet de rechercher un client
+     */
+    public function search($key){
+        $clients = $this->Client->search($key);
+        $this->render('clients/admin/search.twig', [
+            'current_menu' => $this->current_menu,
+            'clients' => $clients,
+            'breadcrumbs' => $this->breadcrumbs
+        ]);
+    }
+
+    /**
+     * Permet de rechercher une ville
      */
     public function searchCities($key){
         $cities = $this->City->searchCity($key);

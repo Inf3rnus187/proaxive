@@ -16,43 +16,32 @@
                         <div class="card">
                             <div class="card-header">
                                 <h4 class="card-title"><i class="icofont-database"></i> Mise à jour Proaxive</h4>
-                                <span>Mise à jour vers 1.6.0-beta02</span>
+                                <span>Mise à jour vers 1.6.0-beta9</span>
                             </div>
                             <div class="card-body">
                                 {{ viewAlert('info',"Ne lancez qu'une seul fois cette mise à jour !") | raw }}
                                 <p>
-                                    La nouvelle version (<strong>1.6.0-beta02</strong>) a besoin de mettre à jour votre base de données.<br>
+                                    La nouvelle version (<strong>1.6.0-beta9</strong>) a besoin de mettre à jour votre base de données.<br>
                                 </p>
                                 <div class="admin-form">
                                     <form method="post" action="" class="d-inline-block">
-                                        <input type="hidden" name="importSql" value="beta02">
+                                        <input type="hidden" name="importSql" value="beta9">
                                         {{ form.submitDefault('Mettre à jour la base de données', 'primary') | raw }}
                                     </form>
+                                    <!--
                                     <form method="post" action="/database-save" class="d-inline-block">
                                         {{ form.submitDefault('Sauvegarder la BDD', 'info') | raw }}
                                     </form>
+                                    -->
                                 </div>
                             </div>
                         </div>
                 </div>
                 <div class="column col-6 col-sm-12">
                     <div class="card">
-                        <div class="card-header"><h4 class="card-title"><i class="icofont-bug"></i> Changelogs</h4> ver.1.6.0-beta02</div>
+                        <div class="card-header"><h4 class="card-title"><i class="icofont-bug"></i> Changelogs</h4> ver.1.6.0-beta9</div>
                         <div class="card-body">
                             <div>
-                                - Mise à jour du thème<br>
-                                - Correction de l'erreur d'ajout d'équipement<br>
-                                - Correctios des fautes d'orthographe<br>
-                                - Ajout RGBA pour les couleurs de fond des statuts<br>
-                                - Correction Topbar flottante dans les paramètres<br>
-                                - Correction impression des inters/débours<br>
-                                - Correction responsive (accueil du tracker)<br>
-                                - Correction responsive sur les tablettes<br>
-                                - Correction des notes épinglées<br>
-                                - Amélioration graphique de la liste des notes<br>
-                                - Ajout d'une Lighbox dans la galerie (interventions)<br>
-                                - Correction CSS dans le template Mail<br>
-                                - Ajout du model Society (lié aux Clients)
                             </div>
                         </div>
                     </div>

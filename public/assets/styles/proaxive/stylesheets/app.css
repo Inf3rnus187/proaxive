@@ -3607,6 +3607,14 @@ a.post-it-note {
   margin-top: 0.7em;
 }
 
+/* Search */
+.item-search{
+  display:block;
+  border: 1px solid var(--border-color);
+  padding:1em;
+  color:inherit;
+}
+
 @media screen and (max-width: 1400px) {
   /* line 2, ../sass/_mediaquery.scss */
   .card-table {

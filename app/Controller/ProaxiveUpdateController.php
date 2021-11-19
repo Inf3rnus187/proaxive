@@ -33,7 +33,7 @@ class ProaxiveUpdateController extends AppController
         $this->session = Session::getSessionInstance();
         // Charge les différentes tables de la base de données
         $this->loadModel('ProaxiveUpdate');
-        $this->loadModel('User');
+        $this->loadModel('Society');
         App::getAuth()->restrict();
 
     }
@@ -58,9 +58,9 @@ class ProaxiveUpdateController extends AppController
      */
     public function updateDatabase(){
 
-        if(!empty($_POST['number_version'])){
-            $result = $this->User->createFields([
-                'key_totp VARCHAR(100) NULL'
+        if(!empty($_POST)){
+            $result = $this->Society->createFields([
+                'department VARCHAR(255) NULL'
             ]);
             /*$update = $this->Intervention->updateFields([
                 'received datetime NULL'
