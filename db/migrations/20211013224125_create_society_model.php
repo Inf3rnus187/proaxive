@@ -42,7 +42,7 @@ class CreateSocietyModel extends AbstractMigration
             ->addColumn('tva_number', 'string', ['null' => true])
             ->addColumn('siret_number', 'string', ['null' => true])
             ->addColumn('naf_number', 'string', ['null' => true])
-            ->addColumn('address', 'string', [
+            ->addColumn('address', 'text', [
                 'limit' => \Phinx\Db\Adapter\MysqlAdapter::TEXT_LONG,
                 'null' => true
             ])
